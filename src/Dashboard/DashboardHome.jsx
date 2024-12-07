@@ -8,7 +8,7 @@ import {
   LuPlus,
   LuMapPin,
   LuPhone,
-  LuFileEdit,
+  LuFileCode,
 } from "react-icons/lu";
 import BottomNav from "../components/BottomNav";
 import ProfileForm from "./ProfileForm";
@@ -23,7 +23,8 @@ import {
 } from "@nextui-org/react";
 import supabaseUtil from "../utils/supabase";
 import { useMyContext } from "../context/MyContext";
-import { toast } from "sonner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DishForm from "./components/DishForm";
 import EditMenuItemModal from "./components/EditMenuItemModal";
 import QRCodeModal from "./components/QRCodeModal";
@@ -279,6 +280,7 @@ export const DashboardHome = () => {
                 } 
                 bg-white/90 backdrop-blur-lg border-2 border-gray-100 shadow-xl
               `}>
+                <ToastContainer />
                 <div className="px-4 py-5 flex justify-between items-center border-b border-green-100">
                   <div className="flex items-center space-x-4">
                     <Avatar
@@ -408,7 +410,7 @@ export const DashboardHome = () => {
                               isLoading={
                                 isLoading && editingItem?.id === item.id
                               }>
-                              <LuFileEdit
+                              <LuFileCode
                                 size={20}
                                 className="text-green-600"
                               />

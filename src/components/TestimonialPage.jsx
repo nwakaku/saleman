@@ -17,7 +17,6 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import supabaseUtil from "../utils/supabase";
-import { toast } from "react-hot-toast";
 import {
   LuMessageSquare,
   LuBox,
@@ -25,6 +24,8 @@ import {
   LuArrowLeft,
   LuQuote,
 } from "react-icons/lu";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const TestimonialPage = () => {
   const { menuId } = useParams();
@@ -331,7 +332,9 @@ export const TestimonialPage = () => {
                 <LuBox className="text-yellow-600" size={24} />
                 <span className="text-sm font-medium">
                   Powered by
-                  <span className="font-bold ml-1 text-black cursor-pointer" onClick={() => navigate("/")}>
+                  <span
+                    className="font-bold ml-1 text-black cursor-pointer"
+                    onClick={() => navigate("/")}>
                     <span className="text-green-700">Sale</span>
                     man
                   </span>
@@ -340,6 +343,7 @@ export const TestimonialPage = () => {
             </div>
           </CardBody>
         </Card>
+        <ToastContainer />
       </div>
     </div>
   );

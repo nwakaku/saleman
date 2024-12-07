@@ -11,7 +11,7 @@ import {
   Input,
 } from "@nextui-org/react";
 import { useState, useEffect, useCallback } from "react";
-import { LuChevronRight, LuFileEdit, LuLogOut, LuPlus } from "react-icons/lu";
+import { LuChevronRight, LuFileInput, LuFileText, LuLogOut, LuPlus } from "react-icons/lu";
 import { useMyContext } from "../context/MyContext";
 import supabaseUtil from "../utils/supabase";
 import BottomNav from "../components/BottomNav";
@@ -60,7 +60,7 @@ const AddressCard = ({ address, isDefault, onEdit, onSetDefault }) => (
       </div>
       <div className="flex space-x-2">
         <button onClick={onEdit} className="text-gray-400 hover:text-gray-500">
-          <LuFileEdit className="h-5 w-5" />
+          <LuFileInput className="h-5 w-5" />
         </button>
       </div>
     </div>
@@ -88,7 +88,7 @@ const PaymentMethodCard = ({ method, isDefault, onEdit, onSetDefault }) => (
       </div>
       <div className="flex space-x-2">
         <button onClick={onEdit} className="text-gray-400 hover:text-gray-500">
-          <LuFileEdit className="h-5 w-5" />
+          <LuFileText className="h-5 w-5" />
         </button>
       </div>
     </div>

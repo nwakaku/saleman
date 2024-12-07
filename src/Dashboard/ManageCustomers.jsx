@@ -18,12 +18,13 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import {
-  LuAlertCircle,
   LuCalendar,
   LuUser,
   LuPhone,
   LuMessageSquare,
   LuTrash2,
+  LuClockAlert,
+  LuBadgeAlert,
 } from "react-icons/lu";
 import BottomNav from "../components/BottomNav";
 
@@ -322,7 +323,7 @@ export function ManageCustomers() {
               <ModalHeader className="text-lg">Remove Customer</ModalHeader>
               <ModalBody>
                 <div className="flex items-start gap-3">
-                  <LuAlertCircle className="h-5 w-5 text-danger mt-1 flex-shrink-0" />
+                  <LuBadgeAlert className="h-5 w-5 text-danger mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-sm">
                       Are you sure you want to remove this customer:

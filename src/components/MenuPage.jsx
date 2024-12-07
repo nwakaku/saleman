@@ -15,7 +15,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import supabaseUtil from "../utils/supabase";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   LuClock,
   LuShoppingCart,
@@ -27,6 +28,7 @@ import {
 } from "react-icons/lu";
 import ReceiptModal from "./ReceiptModal";
 import Paystack from "@paystack/inline-js";
+import { ToastContainer } from 'react-toastify';
 
 export const MenuPage = () => {
   const { menuId } = useParams();
@@ -142,11 +144,6 @@ export const MenuPage = () => {
     toast.success("Proceeding to checkout");
 
     try {
-      const orderData = await saveOrder();
-      if (!orderData || !orderData[0]) {
-        throw new Error("Failed to create order");
-      }
-
       const paymentConfig = {
         reference: `order_${new Date().getTime()}`,
         email: "sample@email.com", // Replace with the user's email
@@ -171,6 +168,12 @@ export const MenuPage = () => {
         phone: paymentConfig.phone,
         onSuccess: async (response) => {
           console.log("Payment successful", response);
+          
+          const orderData = await saveOrder();
+          if (!orderData || !orderData[0]) {
+            throw new Error("Failed to create order");
+          }
+
           const orderDetails = {
             id: orderData[0].id,
             phone_number: phoneNumber,
@@ -181,12 +184,12 @@ export const MenuPage = () => {
 
           setOrderDetails(orderDetails);
           setSelectedItems([]);
-          toast("Order placed successfully!");
+          toast.success("Order placed successfully!");
           setIsReceiptOpen(true);
           onClose();
         },
         onLoad: (response) => {
-          toast("Loading successfully!");
+          toast.info("Loading successfully!");
           console.log("onLoad: ", response);
         },
         onCancel: () => {
@@ -297,7 +300,7 @@ export const MenuPage = () => {
               ))}
               <div className="mt-4">
                 <label className="block text-yellow-700 mb-2" htmlFor="phone">
-                  Phone Number *
+                  Phone Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -339,6 +342,8 @@ export const MenuPage = () => {
             isOpen={isReceiptOpen}
           />
         )}
+
+        <ToastContainer />
 
         <Card className="bg-white/90 backdrop-blur-xl shadow-2xl border-2 border-yellow-200 rounded-3xl overflow-hidden">
           <CardBody className="p-4 sm:p-8">

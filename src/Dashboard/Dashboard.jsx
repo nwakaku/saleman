@@ -1,11 +1,10 @@
 import {
-  LuShoppingCart,
-  LuHome,
-  
+  LuShoppingCart,  
   LuSettings,
   LuLogOut,
   LuMessagesSquare,
   LuUser,
+  LuTornado,
 } from "react-icons/lu";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
@@ -44,7 +43,7 @@ const DashboardSidebar = () => {
 
 
   const navItems = [
-    { icon: LuHome, label: "Dashboard", path: "/dashboard" },
+    { icon: LuTornado, label: "Dashboard", path: "/dashboard" },
     { icon: LuShoppingCart, label: "My Orders", path: "/dashboard/orders" },
     { icon: LuMessagesSquare, label: "AI Chat", path: "/dashboard/chat" },
     {

@@ -27,13 +27,12 @@ import { FaBell } from "react-icons/fa";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { LuEye, LuEyeOff, LuMapPin, LuMenu, LuSparkles } from "react-icons/lu";
+import {  LuMapPin, LuMenu, LuSparkles } from "react-icons/lu";
 import { useMyContext } from "../context/MyContext";
 import supabaseUtil from "../utils/supabase";
 import { FiSearch } from "react-icons/fi";
 import BalancePopover from "./BalancePopover";
 import { requestWithdrawal } from "../utils/withdrawal";
-import { toast } from "react-hot-toast";
 
 const nigerianPlacesBaseUrl = import.meta.env.VITE_NIGERIAN_PLACES_API;
 

@@ -1,4 +1,4 @@
-import { Toaster } from "sonner";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import AllStores from "./components/AllStores";
 // import CommonQuestion  from './components/CommonQuestion'
@@ -15,7 +15,7 @@ function App() {
       <HeroSection />
       <Stores />
       <AllStores />
-      <Toaster />
+      <ToastContainer />
       <Grocery />
       <MarketPlace />
       {/* <CommonQuestion/> */}

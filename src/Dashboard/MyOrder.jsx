@@ -8,12 +8,13 @@ import {
   LuPackage,
   LuTruck,
   LuCheck,
-  LuLoader2,
+  LuLoaderCircle,
 } from "react-icons/lu";
 import { useMyContext } from "../context/MyContext";
 import supabaseUtil from "../utils/supabase";
 import BottomNav from "../components/BottomNav";
-import { toast } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+
 
 // Change from React.memo to regular functions
 const getStatusColor = (status) => {
@@ -192,7 +193,7 @@ const OrderCard = React.memo(({ order, onOrderUpdate }) => {
                 onClick={handleMarkDone}
                 disabled={isLoading}
                 startContent={
-                  isLoading ? <LuLoader2 className="animate-spin" /> : null
+                  isLoading ? <LuLoaderCircle className="animate-spin" /> : null
                 }>
                 {isLoading ? "Marking..." : "Mark Done"}
               </Button>
@@ -345,6 +346,7 @@ export const MyOrders = () => {
         </div>
       </main>
       <BottomNav />
+      <ToastContainer />
     </div>
   );
 };

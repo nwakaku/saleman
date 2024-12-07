@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { LuHome, LuShoppingCart, LuSettings, LuUser } from "react-icons/lu";
+import {  LuShoppingCart, LuSettings, LuUser, LuTornado } from "react-icons/lu";
 
 const BottomNav = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const BottomNav = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-around py-4">
           {[
-            { icon: LuHome, label: "Dashboard", path: "/dashboard" },
+            { icon: LuTornado, label: "Dashboard", path: "/dashboard" },
             {
               icon: LuShoppingCart,
               label: "My Orders",
