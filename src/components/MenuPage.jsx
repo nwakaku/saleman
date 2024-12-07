@@ -37,6 +37,7 @@ export const MenuPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isReceiptOpen, setIsReceiptOpen] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -137,6 +138,7 @@ export const MenuPage = () => {
       return;
     }
 
+    setIsCheckoutLoading(true);
     toast.success("Proceeding to checkout");
 
     try {
@@ -200,7 +202,7 @@ export const MenuPage = () => {
       console.error("Checkout error:", error);
       toast.error("Failed to process checkout");
     } finally {
-      setIsLoading(false);
+      setIsCheckoutLoading(false);
     }
   };
 
@@ -237,6 +239,12 @@ export const MenuPage = () => {
               ₦ {calculateTotal()}
             </p>
           </div>
+          {isCheckoutLoading && (
+            <div className="flex items-center justify-center mt-2">
+              <CircularProgress color="warning" size="sm" />
+              <span className="ml-2 text-yellow-700">Processing...</span>
+            </div>
+          )}
         </div>
 
         {/* Checkout Modal */}
@@ -425,8 +433,9 @@ export const MenuPage = () => {
                 <LuBox className="text-yellow-600" size={24} />
                 <span className="text-sm font-medium">
                   Powered by
-                  <span className="font-bold ml-1 text-yellow-900">
-                    saleman
+                  <span className="font-bold ml-1 text-black cursor-pointer" onClick={() => navigate("/")}>
+                    <span className="text-green-700">Sale</span>
+                    man
                   </span>
                 </span>
               </div>

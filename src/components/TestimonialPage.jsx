@@ -331,8 +331,9 @@ export const TestimonialPage = () => {
                 <LuBox className="text-yellow-600" size={24} />
                 <span className="text-sm font-medium">
                   Powered by
-                  <span className="font-bold ml-1 text-yellow-900">
-                    saleman
+                  <span className="font-bold ml-1 text-black cursor-pointer" onClick={() => navigate("/")}>
+                    <span className="text-green-700">Sale</span>
+                    man
                   </span>
                 </span>
               </div>
