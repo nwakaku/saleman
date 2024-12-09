@@ -247,7 +247,6 @@ export const MenuPage = () => {
         {/* Cart Summary */}
         <div
           onClick={onOpen}
-          onTouchStart={onOpen}
           className="fixed top-4 right-4 z-50 bg-yellow-100 rounded-xl p-4 shadow-md w-64 cursor-pointer">
           <p className="text-yellow-700">Checkout</p>
           <div className="flex justify-between">
@@ -300,20 +299,17 @@ export const MenuPage = () => {
                   <div className="flex items-center space-x-3">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      onTouchStart={() => updateQuantity(item.id, item.quantity - 1)}
                       className="bg-yellow-100 rounded-full w-8 h-8 flex items-center justify-center">
                       -
                     </button>
                     <span>{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      onTouchStart={() => updateQuantity(item.id, item.quantity + 1)}
                       className="bg-yellow-100 rounded-full w-8 h-8 flex items-center justify-center">
                       +
                     </button>
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      onTouchStart={() => removeFromCart(item.id)}
                       className="text-red-500 ml-2">
                       <LuTrash2 size={20} />
                     </button>
@@ -329,7 +325,6 @@ export const MenuPage = () => {
                   id="phone"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  onTouchStart={(e) => setPhoneNumber(e.target.value)}
                   className="w-full p-2 border border-yellow-300 rounded"
                   placeholder="Enter your phone number"
                   required
@@ -361,12 +356,7 @@ export const MenuPage = () => {
                       onClose();
                     }
                   }}
-                  onTouchStart={() => {
-                    if (phoneNumber) {
-                      handleCheckout();
-                      onClose();
-                    }
-                  }}
+                  
                   disabled={!phoneNumber} // Disable button if phoneNumber is empty
                 >
                   <LuCreditCard className="mr-2" />
@@ -488,7 +478,7 @@ export const MenuPage = () => {
                   <span
                     className="font-bold ml-1 text-black cursor-pointer"
                     onClick={() => navigate("/")}
-                    onTouchStart={() => navigate("/")}>
+                    >
                     <span className="text-green-700">Sale</span>
                     man
                   </span>
@@ -507,7 +497,7 @@ export const MenuPage = () => {
                   />
                 }
                 onClick={() => navigate(`/testimonials/${menuId}`)}
-                onTouchStart={() => navigate(`/testimonials/${menuId}`)}>
+               >
                 <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
                   Customer Testimonials
                 </span>
