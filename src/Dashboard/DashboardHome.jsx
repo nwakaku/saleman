@@ -506,6 +506,7 @@ export const DashboardHome = () => {
           menuUrl={menuUrl}
           menuItemsCount={menuItems.length}
           marketName={market.name}
+          marketImage={market.cover_image}
         />
       )}
 
