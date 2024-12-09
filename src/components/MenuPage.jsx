@@ -274,8 +274,8 @@ export const MenuPage = () => {
           onClose={onClose}
           size="2xl"
           backdrop="blur"
-          className="text-yellow-900">
-          <ModalContent>
+          className="text-yellow-900 max-h-[95vh] overflow-y-auto">
+          <ModalContent className="max-h-[95vh] overflow-y-auto">
             <ModalHeader className="flex flex-col gap-1">
               <h2 className="text-2xl font-bold">Your Order</h2>
               <p className="text-sm text-yellow-700">
@@ -356,7 +356,6 @@ export const MenuPage = () => {
                       onClose();
                     }
                   }}
-                  
                   disabled={!phoneNumber} // Disable button if phoneNumber is empty
                 >
                   <LuCreditCard className="mr-2" />
@@ -477,8 +476,7 @@ export const MenuPage = () => {
                   Powered by
                   <span
                     className="font-bold ml-1 text-black cursor-pointer"
-                    onClick={() => navigate("/")}
-                    >
+                    onClick={() => navigate("/")}>
                     <span className="text-green-700">Sale</span>
                     man
                   </span>
@@ -496,8 +494,7 @@ export const MenuPage = () => {
                     size={20}
                   />
                 }
-                onClick={() => navigate(`/testimonials/${menuId}`)}
-               >
+                onClick={() => navigate(`/testimonials/${menuId}`)}>
                 <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
                   Customer Testimonials
                 </span>
