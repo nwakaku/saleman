@@ -356,6 +356,12 @@ export const MenuPage = () => {
                       onClose();
                     }
                   }}
+                  onTouchStart={() => {
+                    if (phoneNumber) {
+                      handleCheckout();
+                      onClose();
+                    }
+                  }}
                   disabled={!phoneNumber} // Disable button if phoneNumber is empty
                 >
                   <LuCreditCard className="mr-2" />
