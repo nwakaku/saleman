@@ -15,8 +15,6 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import supabaseUtil from "../utils/supabase";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   LuClock,
   LuShoppingCart,
@@ -28,7 +26,19 @@ import {
 } from "react-icons/lu";
 import ReceiptModal from "./ReceiptModal";
 import Paystack from "@paystack/inline-js";
-import { ToastContainer } from 'react-toastify';
+import { toast, Toaster } from "react-hot-toast";
+
+
+const SERVICE_CHARGE = 100; // Service charge in naira
+
+
+const customToastStyle = {
+  background: "#fefcbf", // Light yellow background
+  color: "#4a4a4a", // Dark text color
+  padding: "16px",
+  borderRadius: "8px",
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+};
 
 export const MenuPage = () => {
   const { menuId } = useParams();
@@ -79,7 +89,10 @@ export const MenuPage = () => {
     } else {
       setSelectedItems([...selectedItems, { ...item, quantity: 1 }]);
     }
-    toast.success(`${item.name} added to cart`);
+    toast.success(`${item.name} added to cart`, {
+      style: customToastStyle,
+      duration: 3000, // Duration in milliseconds
+    });
   };
 
   const removeFromCart = (itemId) => {
@@ -99,9 +112,11 @@ export const MenuPage = () => {
   };
 
   const calculateTotal = () => {
-    return selectedItems
-      .reduce((total, item) => total + item.price * item.quantity, 0)
-      .toFixed(2);
+    const itemsTotal = selectedItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    return (itemsTotal + SERVICE_CHARGE).toFixed(2);
   };
 
   const saveOrder = async () => {
@@ -148,7 +163,7 @@ export const MenuPage = () => {
         reference: `order_${new Date().getTime()}`,
         email: "sample@email.com", // Replace with the user's email
         phone: phoneNumber,
-        amount: 100 * 100, // Amount in kobo
+        amount: calculateTotal() * 100, // Amount in kobo
         publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         metadata: {
           custom_fields: [
@@ -168,7 +183,7 @@ export const MenuPage = () => {
         phone: paymentConfig.phone,
         onSuccess: async (response) => {
           console.log("Payment successful", response);
-          
+
           const orderData = await saveOrder();
           if (!orderData || !orderData[0]) {
             throw new Error("Failed to create order");
@@ -184,7 +199,10 @@ export const MenuPage = () => {
 
           setOrderDetails(orderDetails);
           setSelectedItems([]);
-          toast.success("Order placed successfully!");
+          toast.success("Order placed successfully!", {
+            style: customToastStyle,
+            duration: 3000,
+          });
           setIsReceiptOpen(true);
           onClose();
         },
@@ -239,7 +257,7 @@ export const MenuPage = () => {
               </span>
             </div>
             <p className="text-yellow-800 font-bold mt-1 text-center sm:text-left">
-              ₦ {calculateTotal()}
+              ₦ {calculateTotal() - SERVICE_CHARGE}
             </p>
           </div>
           {isCheckoutLoading && (
@@ -316,7 +334,9 @@ export const MenuPage = () => {
             <ModalFooter>
               <div className="w-full">
                 <div className="flex justify-between mb-4">
-                  <span className="font-bold text-xl">Total</span>
+                  <span className="font-bold text-xl">
+                    Total <span className="text-sm italic font-light">+ service Fee</span>
+                  </span>
                   <span className="font-bold text-xl text-yellow-800">
                     ₦ {calculateTotal()}
                   </span>
@@ -324,8 +344,17 @@ export const MenuPage = () => {
                 <Button
                   color="warning"
                   variant="solid"
-                  className="w-full"
-                  onClick={() => (handleCheckout(), onClose())}>
+                  className={`w-full ${
+                    !phoneNumber ? "opacity-50 cursor-not-allowed" : ""
+                  }`} // Add styles for disabled state
+                  onClick={() => {
+                    if (phoneNumber) {
+                      handleCheckout();
+                      onClose();
+                    }
+                  }}
+                  disabled={!phoneNumber} // Disable button if phoneNumber is empty
+                >
                   <LuCreditCard className="mr-2" />
                   Proceed to Checkout
                 </Button>
@@ -343,7 +372,7 @@ export const MenuPage = () => {
           />
         )}
 
-        <ToastContainer />
+        <Toaster position="top-center" />
 
         <Card className="bg-white/90 backdrop-blur-xl shadow-2xl border-2 border-yellow-200 rounded-3xl overflow-hidden">
           <CardBody className="p-4 sm:p-8">
@@ -438,7 +467,9 @@ export const MenuPage = () => {
                 <LuBox className="text-yellow-600" size={24} />
                 <span className="text-sm font-medium">
                   Powered by
-                  <span className="font-bold ml-1 text-black cursor-pointer" onClick={() => navigate("/")}>
+                  <span
+                    className="font-bold ml-1 text-black cursor-pointer"
+                    onClick={() => navigate("/")}>
                     <span className="text-green-700">Sale</span>
                     man
                   </span>

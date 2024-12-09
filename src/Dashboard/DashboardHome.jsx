@@ -53,6 +53,7 @@ export const DashboardHome = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isDishFormVisible, setIsDishFormVisible] = useState(false);
+  const [isAddingMenuItem, setIsAddingMenuItem] = useState(false);
 
   useEffect(() => {
     const fetchMarketplace = async () => {
@@ -141,20 +142,21 @@ export const DashboardHome = () => {
   };
 
   const addMenuItem = async (newItem) => {
+    // Validate inputs
     if (!newItem.name || !newItem.price) {
       toast.error("Please fill in the item name and price");
-      return;
+      throw new Error("Invalid input");
     }
 
-    const menuItem = {
-      id: Date.now(),
-      name: newItem.name,
-      price: parseFloat(newItem.price),
-      description: newItem.description,
-      image: newItem.image,
-    };
-
     try {
+      const menuItem = {
+        id: Date.now(),
+        name: newItem.name,
+        price: parseFloat(newItem.price),
+        description: newItem.description,
+        image: newItem.image,
+      };
+
       const updatedMenu = [...menuItems, menuItem];
 
       const { error } = await supabaseUtil
@@ -165,19 +167,11 @@ export const DashboardHome = () => {
       if (error) throw error;
 
       setMenuItems(updatedMenu);
-
-      // Reset form
-      setNewItem({
-        name: "",
-        price: "",
-        description: "",
-        image: null,
-      });
-
       toast.success("Menu item added successfully");
     } catch (error) {
       console.error("Error adding menu item:", error);
       toast.error("Failed to add menu item");
+      throw error;
     }
   };
 
@@ -469,7 +463,11 @@ export const DashboardHome = () => {
                   </Button>
                 </div>
               ) : (
-                <DishForm onAddMenuItem={addMenuItem} isLoading={isLoading} />
+                <DishForm
+                  onAddMenuItem={addMenuItem}
+                  isLoading={isAddingMenuItem}
+                  setIsLoading={setIsAddingMenuItem}
+                />
               )}
             </div>
           )}
@@ -483,11 +481,16 @@ export const DashboardHome = () => {
                 <ModalHeader>Add Menu Item</ModalHeader>
                 <ModalBody>
                   <DishForm
-                    onAddMenuItem={() => {
-                      addMenuItem();
-                      setIsDishFormVisible(false);
+                    onAddMenuItem={async (newItem) => {
+                      try {
+                        await addMenuItem(newItem);
+                        setIsDishFormVisible(false);
+                      } catch (error) {
+                        // Error handling is done in addMenuItem method
+                      }
                     }}
-                    isLoading={isLoading}
+                    isLoading={isAddingMenuItem}
+                    setIsLoading={setIsAddingMenuItem}
                   />
                 </ModalBody>
               </ModalContent>

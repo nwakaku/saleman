@@ -24,8 +24,15 @@ import {
   LuArrowLeft,
   LuQuote,
 } from "react-icons/lu";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
+
+const customToastStyle = {
+  background: "#fefcbf", // Light yellow background
+  color: "#4a4a4a", // Dark text color
+  padding: "16px",
+  borderRadius: "8px",
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+};
 
 export const TestimonialPage = () => {
   const { menuId } = useParams();
@@ -115,7 +122,10 @@ export const TestimonialPage = () => {
         ...testimonials,
       ]);
 
-      toast.success("Testimonial submitted successfully!");
+      toast.success("Testimonial submitted successfully!", {
+        style: customToastStyle,
+        duration: 3000, // Duration in milliseconds
+      });
       setNewTestimonial("");
       setPhoneNumber("");
       onClose();
@@ -343,7 +353,7 @@ export const TestimonialPage = () => {
             </div>
           </CardBody>
         </Card>
-        <ToastContainer />
+        <Toaster />
       </div>
     </div>
   );

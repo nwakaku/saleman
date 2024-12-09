@@ -179,6 +179,10 @@ const Header = () => {
 
       // Calculate the total amount
       const unifiedTotal = totalOrders - totalWithdrawals;
+
+      console.log(totalWithdrawals);
+      console.log(unifiedTotal);
+      console.log(totalOrders);
       setTotalAmount(unifiedTotal);
 
       // Check for pending withdrawals

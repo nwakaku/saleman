@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button, Input, Avatar } from "@nextui-org/react";
 import { LuImage } from "react-icons/lu";
 
-const DishForm = ({ onAddMenuItem, isLoading }) => {
+const DishForm = ({ onAddMenuItem, isLoading, setIsLoading }) => {
   const [newItem, setNewItem] = useState({
     name: "",
     price: "",
@@ -25,15 +25,32 @@ const DishForm = ({ onAddMenuItem, isLoading }) => {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = () => {
-    onAddMenuItem(newItem);
-    // Reset form after submission
-    setNewItem({
-      name: "",
-      price: "",
-      description: "",
-      image: null,
-    });
+  const handleSubmit = async () => {
+    // Validate inputs
+    if (!newItem.name || !newItem.price) {
+      return;
+    }
+
+    try {
+      // Set loading to true before calling onAddMenuItem
+      setIsLoading(true);
+
+      // Wait for the menu item to be added
+      await onAddMenuItem(newItem);
+
+      // Reset form after successful submission
+      setNewItem({
+        name: "",
+        price: "",
+        description: "",
+        image: null,
+      });
+    } catch (error) {
+      console.error("Error adding menu item:", error);
+    } finally {
+      // Ensure loading is set to false after operation
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -46,14 +63,14 @@ const DishForm = ({ onAddMenuItem, isLoading }) => {
           <Avatar
             src={newItem.image || "/api/placeholder/200/200"}
             className="w-52 h-52 rounded-2xl 
-            group-hover:scale-105 transition-transform 
-            ring-4 ring-green-100 ring-offset-2"
+              group-hover:scale-105 transition-transform
+              ring-4 ring-green-100 ring-offset-2"
           />
           <label
             className="absolute bottom-2 right-2 
-            bg-gray-500 text-white rounded-full 
-            p-3 cursor-pointer hover:bg-gray-600 
-            transition-colors shadow-md">
+              bg-gray-500 text-white rounded-full
+              p-3 cursor-pointer hover:bg-gray-600
+              transition-colors shadow-md">
             <LuImage className="text-xl" />
             <input
               type="file"
@@ -125,8 +142,9 @@ const DishForm = ({ onAddMenuItem, isLoading }) => {
           onClick={handleSubmit}
           isLoading={isLoading}
           className="w-full bg-gradient-to-r from-green-500 to-green-700 
-          text-white hover:from-green-600 hover:to-green-700 
-          transition-all duration-300">
+            text-white hover:from-green-600 hover:to-green-700
+            transition-all duration-300"
+          isDisabled={!newItem.name || !newItem.price}>
           {isLoading ? "Adding..." : "Add Dish to Menu"}
         </Button>
       </div>
