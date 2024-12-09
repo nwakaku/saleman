@@ -335,7 +335,10 @@ export const MenuPage = () => {
               <div className="w-full">
                 <div className="flex justify-between mb-4">
                   <span className="font-bold text-xl">
-                    Total <span className="text-sm italic font-light">+ service Fee</span>
+                    Total{" "}
+                    <span className="text-sm italic font-light">
+                      + service Fee
+                    </span>
                   </span>
                   <span className="font-bold text-xl text-yellow-800">
                     ₦ {calculateTotal()}
@@ -446,7 +449,11 @@ export const MenuPage = () => {
                         variant="solid"
                         className="w-full mt-2"
                         startContent={<LuShoppingCart size={25} />}
-                        onClick={() => addToCart(item)}>
+                        onTouchStart={() => addToCart(item)} // Add touch event
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(item);
+                        }}>
                         Add to Cart
                       </Button>
                     </CardBody>
