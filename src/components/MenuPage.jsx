@@ -91,7 +91,7 @@ export const MenuPage = () => {
     }
     toast.success(`${item.name} added to cart`, {
       style: customToastStyle,
-      duration: 1500, // Duration in milliseconds
+      duration: 1000, // Duration in milliseconds
     });
   };
 
