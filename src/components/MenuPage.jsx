@@ -500,6 +500,10 @@ export const MenuPage = () => {
                     size={20}
                   />
                 }
+
+                onTouchStart={() => {
+                  navigate(`/testimonials/${menuId}`);
+                }}
                 onClick={() => navigate(`/testimonials/${menuId}`)}>
                 <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
                   Customer Testimonials
