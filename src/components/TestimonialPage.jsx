@@ -332,6 +332,9 @@ export const TestimonialPage = () => {
                     size={20}
                   />
                 }
+                onTouchStart={() => {
+                  navigate(`/menu/${menuId}`);
+                }}
                 onClick={() => navigate(`/menu/${menuId}`)}>
                 <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
                   Back to Menu
