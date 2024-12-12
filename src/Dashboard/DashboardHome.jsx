@@ -70,6 +70,7 @@ export const DashboardHome = () => {
         if (error && error.code !== "PGRST116") throw error;
 
         if (data) {
+          console.log(data);
           setMarket(data);
           setMenuItems(data.menu || []);
           setIsAddingMarket(false);
@@ -115,6 +116,7 @@ export const DashboardHome = () => {
     const newMarket = {
       user_id: session.user.id,
       name: profileData.name,
+      business_type: profileData.businessType,
       tagline: profileData.tagline,
       cover_image: profileData.coverImage,
       contact: profileData.contact,
@@ -287,7 +289,9 @@ export const DashboardHome = () => {
                       </h2>
                       {market?.tagline && (
                         <p className="text-gray-600 text-sm mt-1 hidden lg:block">
-                          {market.tagline}
+                          {market.tagline.length > 40
+                            ? market.tagline.substring(0, 40) + "..."
+                            : market.tagline}
                         </p>
                       )}
                     </div>

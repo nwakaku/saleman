@@ -28,9 +28,8 @@ import ReceiptModal from "./ReceiptModal";
 import Paystack from "@paystack/inline-js";
 import { toast, Toaster } from "react-hot-toast";
 
-
+const SERVICE_CHARGE_THRESHOLD = 10000; // Threshold for applying service charge
 const SERVICE_CHARGE = 100; // Service charge in naira
-
 
 const customToastStyle = {
   background: "#fefcbf", // Light yellow background
@@ -116,7 +115,14 @@ export const MenuPage = () => {
       (total, item) => total + item.price * item.quantity,
       0
     );
-    return (itemsTotal + SERVICE_CHARGE).toFixed(2);
+
+    // Apply service charge only if total is 10,000 or more
+    const finalTotal =
+      itemsTotal >= SERVICE_CHARGE_THRESHOLD
+        ? itemsTotal + SERVICE_CHARGE
+        : itemsTotal;
+
+    return finalTotal.toFixed(2);
   };
 
   const saveOrder = async () => {
@@ -126,10 +132,17 @@ export const MenuPage = () => {
         return null;
       }
 
+      const itemsTotal = selectedItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      );
+
       const orderData = {
         restaurant_id: menuId,
         items: selectedItems,
         total_amount: parseFloat(calculateTotal()),
+        service_charge:
+          itemsTotal >= SERVICE_CHARGE_THRESHOLD ? SERVICE_CHARGE : 0,
         status: "pending",
         customer_phone: phoneNumber,
         created_at: new Date().toISOString(),
@@ -257,7 +270,7 @@ export const MenuPage = () => {
               </span>
             </div>
             <p className="text-yellow-800 font-bold mt-1 text-center sm:text-left">
-              ₦ {calculateTotal() - SERVICE_CHARGE}
+              ₦ {calculateTotal()}
             </p>
           </div>
           {isCheckoutLoading && (
@@ -337,7 +350,12 @@ export const MenuPage = () => {
                   <span className="font-bold text-xl">
                     Total{" "}
                     <span className="text-sm italic font-light">
-                      + service Fee
+                      {selectedItems.reduce(
+                        (total, item) => total + item.price * item.quantity,
+                        0
+                      ) >= SERVICE_CHARGE_THRESHOLD
+                        ? "+ service Fee"
+                        : ""}
                     </span>
                   </span>
                   <span className="font-bold text-xl text-yellow-800">
@@ -390,7 +408,7 @@ export const MenuPage = () => {
               <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <Avatar
                   src={menuData.cover_image}
-                  className="w-24 h-24 rounded-full border-4 border-yellow-300 shadow-lg"
+                  className="w-20 h-20 rounded-full border-4 border-yellow-300 shadow-lg"
                 />
                 <div className="text-center sm:text-left">
                   <h1 className="text-2xl text-yellow-900 font-bold tracking-wide">
@@ -401,7 +419,7 @@ export const MenuPage = () => {
                       className="text-yellow-500 fill-yellow-500"
                       size={20}
                     />
-                    <p className="text-yellow-700">
+                    <p className="text-yellow-700 text-sm">
                       {menuData.tagline || "Exquisite Dining Experience"}
                     </p>
                   </div>
@@ -500,7 +518,6 @@ export const MenuPage = () => {
                     size={20}
                   />
                 }
-
                 onTouchStart={() => {
                   navigate(`/testimonials/${menuId}`);
                 }}

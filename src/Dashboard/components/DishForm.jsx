@@ -56,7 +56,7 @@ const DishForm = ({ onAddMenuItem, isLoading, setIsLoading }) => {
   return (
     <div className="p-6 space-y-6 h-[calc(100vh-6rem)] overflow-y-auto bg-white/90 backdrop-blur-lg border-2 border-green-100 shadow-xl">
       <h3 className="text-2xl font-bold text-center text-green-800">
-        Add New Dish
+        Add New Menu Item
       </h3>
       <div className="flex flex-col items-center space-y-6">
         <div className="relative group">
@@ -84,7 +84,7 @@ const DishForm = ({ onAddMenuItem, isLoading, setIsLoading }) => {
         <div className="space-y-4 w-full">
           <Input
             name="name"
-            label="Dish Name"
+            label=" Name"
             variant="bordered"
             color="default"
             value={newItem.name}
@@ -119,7 +119,7 @@ const DishForm = ({ onAddMenuItem, isLoading, setIsLoading }) => {
           />
           <Input
             name="description"
-            label="Dish Description"
+            label=" Description"
             variant="bordered"
             color="default"
             value={newItem.description}
@@ -145,7 +145,7 @@ const DishForm = ({ onAddMenuItem, isLoading, setIsLoading }) => {
             text-white hover:from-green-600 hover:to-green-700
             transition-all duration-300"
           isDisabled={!newItem.name || !newItem.price}>
-          {isLoading ? "Adding..." : "Add Dish to Menu"}
+          {isLoading ? "Adding..." : "Add to Menu"}
         </Button>
       </div>
     </div>
