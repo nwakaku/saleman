@@ -33,7 +33,7 @@ const QRCodeModal = ({ isOpen, onClose, menuUrl, marketName, marketImage }) => {
           <div className="flex items-center space-x-2 mb-2">
             <LuQrCode className="text-yellow-800" size={32} />
             <h3 className="text-3xl font-bold text-yellow-900">
-              Smart Menu Access
+              Saleman Smart Menu 
             </h3>
           </div>
           <p className="text-yellow-700 flex items-center space-x-1">
