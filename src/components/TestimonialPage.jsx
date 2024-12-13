@@ -190,6 +190,7 @@ export const TestimonialPage = () => {
               color="warning"
               variant="solid"
               startContent={<LuMessageSquare />}
+              onTouchStart={onOpen}
               onClick={onOpen}>
               Add Your Testimonial
             </Button>
