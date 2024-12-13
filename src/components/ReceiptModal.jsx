@@ -8,8 +8,11 @@ import {
   Button,
 } from "@nextui-org/react";
 import { LuBox } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
+  const navigate = useNavigate();
+
   if (!orderDetails) return null;
 
   return (
@@ -80,11 +83,16 @@ export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
               className="w-full mb-4">
               Close Receipt
             </Button>
-            <div className="flex items-center space-x-2 text-yellow-700">
+            <div className="flex items-center justify-center space-x-2 text-yellow-700">
               <LuBox className="text-yellow-600" size={24} />
               <span className="text-sm font-medium">
                 Powered by
-                <span className="font-bold ml-1 text-yellow-900">saleman</span>
+                <span
+                  className="font-bold ml-1 text-black cursor-pointer"
+                  onClick={() => navigate("/")}>
+                  <span className="text-green-700">Sale</span>
+                  man.xyz
+                </span>
               </span>
             </div>
           </div>

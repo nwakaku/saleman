@@ -23,6 +23,10 @@ import {
   LuStar,
   LuArrowLeft,
   LuQuote,
+  LuFacebook,
+  LuInstagram,
+  LuTwitter,
+  LuMoveLeft,
 } from "react-icons/lu";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -321,26 +325,8 @@ export const TestimonialPage = () => {
             )}
 
             {/* Back to Menu & Powered By */}
+            {/* Powered By saleman */}
             <div className="mt-8 flex flex-col items-center space-y-4">
-              <Button
-                color="warning"
-                variant="bordered"
-                className="group hover:bg-yellow-100 transition-all duration-300 mr-auto"
-                startContent={
-                  <LuArrowLeft
-                    className="group-hover:text-yellow-900 text-yellow-700"
-                    size={20}
-                  />
-                }
-                onTouchStart={() => {
-                  navigate(`/menu/${menuId}`);
-                }}
-                onClick={() => navigate(`/menu/${menuId}`)}>
-                <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
-                  Back to Menu
-                </span>
-              </Button>
-
               <div className="flex items-center justify-center space-x-2 text-yellow-700">
                 <LuBox className="text-yellow-600" size={24} />
                 <span className="text-sm font-medium">
@@ -349,9 +335,54 @@ export const TestimonialPage = () => {
                     className="font-bold ml-1 text-black cursor-pointer"
                     onClick={() => navigate("/")}>
                     <span className="text-green-700">Sale</span>
-                    man
+                    man.xyz
                   </span>
                 </span>
+              </div>
+
+              {/* New Testimonial Button */}
+              <div className="flex flex-col lg:flex-row-reverse lg:space-y-0 space-y-4 justify-around items-center w-full">
+                <div className=" flex justify-center space-x-4">
+                  <a
+                    href="https://facebook.com/saleman"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-700 hover:text-yellow-900 transition-colors duration-300 bg-white/90 lg:border-2 border-yellow-400 rounded-full lg:p-2">
+                    <LuFacebook size={20} />
+                  </a>
+                  <a
+                    href="https://instagram.com/saleman.xyz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-700 hover:text-yellow-900 transition-colors duration-300 bg-white/90 lg:border-2 border-yellow-400 rounded-full lg:p-2">
+                    <LuInstagram size={20} />
+                  </a>
+                  <a
+                    href="https://twitter.com/saleman"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-700 hover:text-yellow-900 transition-colors duration-300 bg-white/90 lg:border-2 border-yellow-400 rounded-full lg:p-2">
+                    <LuTwitter size={20} />
+                  </a>
+                </div>
+                <Button
+                  color="warning"
+                  variant="bordered"
+                  className="group hover:bg-yellow-100 transition-all duration-300"
+                  startContent={
+                    <LuMoveLeft
+                      className="group-hover:text-yellow-900 text-yellow-700"
+                      size={20}
+                    />
+                  }
+                  onTouchStart={() => {
+                    navigate(`/menu/${menuId}`);
+                  }}
+                  onClick={() => navigate(`/menu/${menuId}`)}>
+                  <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
+                    Customer Testimonials
+                  </span>
+                </Button>
               </div>
             </div>
           </CardBody>
