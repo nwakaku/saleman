@@ -252,8 +252,8 @@ const Header = () => {
                 src="https://res.cloudinary.com/dgbreoalg/image/upload/v1730492969/apron_z9z60j.png"
                 width={30}
               />
-              <h2 className="font-extrabold hidden lg:flex text-inherit text-2xl text-green-900">
-                <span className="text-green-700">Sale</span>man
+              <h2 className="font-extrabold hidden lg:flex lg:flex-row lg:items-end text-2xl ">
+                <span className="text-green-700">Sale</span>man<span className="text-sm">.xyz</span>
               </h2>
             </span>
           </div>

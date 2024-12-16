@@ -87,7 +87,7 @@ const AllStores = () => {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h3 className="text-xl sm:text-2xl font-extrabold">
-            All Stores in <span className="text-green-600">Abuja, Nigeria</span>
+            All Restaurants in <span className="text-green-600">Abuja, Nigeria</span>
           </h3>
         </div>
 
