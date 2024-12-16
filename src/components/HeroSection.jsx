@@ -16,9 +16,9 @@ const HeroSection = () => {
         <div className="text-white justify-center items-center flex">
           <div className="flex flex-col space-y-2 px-4 justify-center items-center lg:items-start">
             <div className="space-y-4">
-              <h2 className="lg:text-4xl text-2xl font-bold text-center lg:text-left">
-                Shopping Reimagined: Contactless, Effortless, Extraordinary
-              </h2>
+              <h3 className="lg:text-4xl text-2xl font-bold text-center lg:text-left">
+                Dining Reimagined: AI-Powered Smart Menu & CRM.
+              </h3>
 
               <div className="flex flex-wrap justify-center md:justify-start gap-2 text-sm md:text-base">
                 <div className="flex items-center space-x-1">

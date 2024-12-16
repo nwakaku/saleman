@@ -8,7 +8,7 @@ const Stores = () => {
 
   const stores = [
     {
-      name: "Crunchies",
+      name: "Pizza Hut",
       time: "By 12:30pm",
       image:
         "https://res.cloudinary.com/dgbreoalg/image/upload/v1733320983/Pizzahunt_d9r0bo.png",
@@ -31,12 +31,7 @@ const Stores = () => {
       image:
         "https://pbs.twimg.com/profile_images/1712861300840370176/-8LTi8Uh_400x400.jpg",
     },
-    {
-      name: "Peak Food",
-      time: "By 1:30pm",
-      image:
-        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406277/Peak_r9dwgu.webp",
-    },
+
     {
       name: "SubWay",
       time: "By 12:00pm",
@@ -62,6 +57,12 @@ const Stores = () => {
       time: "By 2:00pm",
       image:
         "https://res.cloudinary.com/dgbreoalg/image/upload/v1733322294/foods_co_ovgnaw.webp",
+    },
+    {
+      name: "Peak Food",
+      time: "By 1:30pm",
+      image:
+        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406277/Peak_r9dwgu.webp",
     },
   ];
 

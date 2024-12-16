@@ -5,43 +5,43 @@ const AllStores = () => {
   // Store data array
   const stores = [
     {
-      name: "Cocacola",
-      time: "delivery by 11:30am",
+      name: "Pizza Hut",
+      time: "30mins",
       image:
-        "https://1000logos.net/wp-content/uploads/2016/11/Shape-Coca-Cola-Logo.jpg",
+        "https://res.cloudinary.com/dgbreoalg/image/upload/v1733320983/Pizzahunt_d9r0bo.png",
       comment: "$10 off EBT, lots of deal",
     },
     {
-      name: "Dangote",
-      time: "delivery By 11:45am",
+      name: "Dominos Pizza",
+      time: "15 Mins Wait Time",
       image:
-        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731344408/dangote_s8las6.svg",
+        "https://res.cloudinary.com/dgbreoalg/image/upload/v1733321095/Dominos_Pizza_xqgee9.png",
       comment: "EBT, bulk pricing ",
     },
     {
-      name: "Nestle",
-      time: "delivery By 12:00pm",
+      name: "McDonald",
+      time: "15 Mins Wait Time",
       image:
-        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406359/Nestle-Logo_xmbsay.png",
+        "https://pbs.twimg.com/profile_images/1863976445556449280/OsLJTN-J_400x400.jpg",
       comment: "$15 off in-store prices EBT",
     },
     {
-      name: "Peak",
-      time: "delivery By 12:15pm",
+      name: "Peak Foods",
+      time: "20 Mins Wait Time",
       image:
         "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406277/Peak_r9dwgu.webp",
     },
     {
-      name: "Unilever",
-      time: "delivery By 12:30pm",
+      name: "Foods Co",
+      time: "25 Mins Wait Time",
       image:
-        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406009/Unilever-logo_mo5nuu.jpg",
+        "https://res.cloudinary.com/dgbreoalg/image/upload/v1733322294/foods_co_ovgnaw.webp",
     },
     {
-      name: "Power Pasta",
-      time: "delivery By 1:00pm",
+      name: "KFC",
+      time: "25 Mins Wait Time",
       image:
-        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406239/dufil_nqhv0b.jpg",
+        "https://pbs.twimg.com/profile_images/985942831910064128/8BhIUuaA_400x400.jpg",
       comment: "$10 off EBT, lots of deal",
     },
     {
@@ -52,10 +52,10 @@ const AllStores = () => {
       comment: "$30 off ",
     },
     {
-      name: "Golden Penny",
-      time: "delivery By 1:30pm",
+      name: "SubWay",
+      time: "5 Mins Wait Time",
       image:
-        "https://res.cloudinary.com/dgbreoalg/image/upload/v1731406466/goldenpenny_ebcbhl.jpg",
+        "https://pbs.twimg.com/profile_images/1605327286810644482/--BZb7WJ_400x400.jpg",
     },
     {
       name: "Pepsi",
@@ -71,7 +71,7 @@ const AllStores = () => {
        { label: "Fastest", active: false },
        { label: "Offers", active: false },
        { label: "Low Prices", active: false },
-       { label: "Grocery", active: false },
+       { label: "Closest", active: false },
        { label: "Beverages", active: false },
        { label: "Pickup", active: false },
        { label: "In store Prices", active: false },

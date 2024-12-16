@@ -5,19 +5,19 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 export const MarketPlace = () => {
   const statistics = [
     {
-      value: "1 billion products",
+      value: "1 Billion Dishes",
       description:
-        "Available products across all our partnered stores in Africa",
+        "Available products across all our partnered restaurants in Africa",
     },
     {
-      value: "80,000      stores",
+      value: "80,000 Restaurants",
       description:
-        "Partner stores across multiple cities delivering quality products",
+        "Partner restaurants across multiple cities delivering quality dishes",
     },
     {
-      value: "14,000 cities",
+      value: "100,000 Cities",
       description:
-        "Cities covered across Africa with fast and reliable delivery",
+        "Cities covered across Africa with fast and reliable service",
     },
     {
       value: "Millions of orders",
@@ -31,9 +31,8 @@ export const MarketPlace = () => {
         {/* Header Section */}
         <div className="text-center">
           <h3 className="text-4xl font-extrabold text-gray-700 leading-tight">
-            The largest online grocery
-            <br />
-            marketplace in Africa
+            Elevate Your Dining Experience
+            <br />Effortlessly in Africa
           </h3>
         </div>
 
@@ -53,7 +52,7 @@ export const MarketPlace = () => {
               key={index}
               className="border border-gray-200 hover:shadow-lg transition-shadow duration-200">
               <CardHeader className="pb-2 pt-6 px-6">
-                <h4 className="text-3xl font-extrabold text-gray-700 leading-tight ">
+                <h4 className="text-2xl font-extrabold text-gray-700 leading-tight ">
                   {stat.value}
                 </h4>
               </CardHeader>

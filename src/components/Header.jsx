@@ -34,7 +34,8 @@ import { FiSearch } from "react-icons/fi";
 import BalancePopover from "./BalancePopover";
 import { requestWithdrawal } from "../utils/withdrawal";
 
-const nigerianPlacesBaseUrl = import.meta.env.VITE_NIGERIAN_PLACES_API;
+const nigerianPlacesBaseUrl =
+  "https://nigerianplacesapi-production-b9f9.up.railway.app";
 
 const sendHttpRequest = async (config, callback) => {
   try {
@@ -272,7 +273,7 @@ const Header = () => {
               }}
               placeholder={
                 isAIMode
-                  ? "Prompt: A month grocery for a bachelor with $2000 budget"
+                  ? "Prompt: Search for restaurants around you"
                   : "Search for groceries..."
               }
               value={searchQuery}
