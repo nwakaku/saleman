@@ -62,7 +62,7 @@ export const Grocery = () => {
       {/* Delivery Cards Section */}
       <div className="space-y-8">
         <h3 className="text-3xl font-extrabold text-center mb-8">
-          Grocery delivery you can count on
+          Smart Menu and CRM you can count on
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
