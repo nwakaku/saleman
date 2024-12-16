@@ -3,6 +3,7 @@
 // src/context/MyContext.jsx
 import { createContext, useContext, useState } from "react";
 import supabaseUtil from "../utils/supabase";
+import { useDisclosure } from "@nextui-org/react";
 
 const MyContext = createContext();
 
@@ -17,6 +18,8 @@ export const MyContextProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isPromptModalOpen, setIsPromptModalOpen] = useState(false);
   const [showCart, setShowCart] = useState(true);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
 
   const [cartItems, setCartItems] = useState([
     {
@@ -85,6 +88,9 @@ export const MyContextProvider = ({ children }) => {
         isBalanceVisible,
         setIsBalanceVisible,
         toggleBalanceVisibility,
+        isOpen,
+        onOpen,
+        onOpenChange,
       }}>
       {children}
     </MyContext.Provider>

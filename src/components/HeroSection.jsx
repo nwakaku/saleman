@@ -1,13 +1,20 @@
 import { Button, Image } from "@nextui-org/react";
 import { LuBox, LuCreditCard, LuMessageCircle, LuQrCode } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../context/MyContext";
 
 const HeroSection = () => {
+
+  const { session, onOpen } = useMyContext();
 
     const navigate = useNavigate();
 
     const handleRoute = () => {
-        navigate("/dashboard");
+       if (session) {
+         navigate("/dashboard");
+       } else {
+         onOpen(); // Open the authentication modal
+       }
     }
 
   return (

@@ -50,9 +50,8 @@ const sendHttpRequest = async (config, callback) => {
 
 const Header = () => {
   const navigate = useNavigate();
-  const { session, setSession } = useMyContext();
+  const { session, setSession, isOpen, onOpen, onOpenChange } = useMyContext();
   const [notificationCount, setNotificationCount] = useState(0);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { setUser, isAIMode, setIsAIMode } = useMyContext();
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Abuja"]));
   const [nigerianStates, setNigerianStates] = useState([]);
@@ -215,7 +214,11 @@ const Header = () => {
   };
 
   const handleCartClick = () => {
-    navigate("/dashboard");
+    if (session) {
+      navigate("/dashboard");
+    } else {
+      onOpen(); // Open the authentication modal
+    }
   };
 
   const handleWithdrawal = async (withdrawalDetails) => {
@@ -240,6 +243,7 @@ const Header = () => {
         className="py-2 lg:bg-white bg-[#003D29] shadow-md">
         <NavbarBrand>
           <div className="flex justify-center items-center space-x-2 cursor-pointer">
+            
             <div
               onClick={handleCartClick}
               className="p-2 rounded-xl border-1 border-green-700">
