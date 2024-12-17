@@ -73,24 +73,24 @@ const Header = () => {
   }, [searchParams, setIsAIMode]);
 
   useEffect(() => {
-    const handleSession = () => {
-      supabaseUtil.auth.getSession().then(({ data: { session } }) => {
-        setSession(session);
-      });
+    const handleAuthStateChange = async () => {
+      const { data } = supabaseUtil.auth.onAuthStateChange(
+        async (event, session) => {
+          if (event === "SIGNED_IN") {
+            setSession(session);
+            navigate("/dashboard");
+            setNotificationCount(2);
+          }
+        }
+      );
 
-      const {
-        data: { subscription },
-      } = supabaseUtil.auth.onAuthStateChange((_event, session) => {
-        setSession(session);
-      });
-
-      setNotificationCount(2);
-
-      return () => subscription.unsubscribe();
+      return () => {
+        data.subscription.unsubscribe();
+      };
     };
 
-    handleSession();
-  }, []);
+    handleAuthStateChange();
+  }, [navigate, setSession]);
 
   useEffect(() => {
     const handleSetUser = () => {

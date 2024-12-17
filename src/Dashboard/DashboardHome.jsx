@@ -54,10 +54,11 @@ export const DashboardHome = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isDishFormVisible, setIsDishFormVisible] = useState(false);
   const [isAddingMenuItem, setIsAddingMenuItem] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
     const fetchMarketplace = async () => {
-      if (!session?.user?.id) return;
+      if (!session?.user?.id || isFetched) return;
 
       setIsLoading(true);
       try {
@@ -70,10 +71,10 @@ export const DashboardHome = () => {
         if (error && error.code !== "PGRST116") throw error;
 
         if (data) {
-          console.log(data);
           setMarket(data);
           setMenuItems(data.menu || []);
           setIsAddingMarket(false);
+          setIsFetched(true);
         }
       } catch (error) {
         console.error("Error fetching marketplace:", error);
@@ -83,7 +84,7 @@ export const DashboardHome = () => {
     };
 
     fetchMarketplace();
-  }, [session]);
+  }, [session?.user?.id, isFetched]);
 
   // Add responsive check
   useEffect(() => {
@@ -203,7 +204,7 @@ export const DashboardHome = () => {
       const menuUrl = `${window.location.origin}/menu/${market.id}`;
       setMenuUrl(menuUrl);
       setIsQRModalOpen(true);
-      toast.success("QR Code generated successfully");
+      toast.success("QRCode displayed successfully");
     } catch (error) {
       console.error("Error generating QR code:", error);
       toast.error("Failed to generate QR code");
