@@ -8,6 +8,7 @@ import {
 } from "react-icons/lu";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
+import supabaseUtil from "../utils/supabase";
 
 
 
@@ -31,7 +32,7 @@ const DashboardSidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const { user, handleLogout } = useMyContext();
+  const { user, setSession, } = useMyContext();
 
 
   
@@ -54,11 +55,11 @@ const DashboardSidebar = () => {
     navigate(path);
   };
 
-  // const handleSignOut = async () => {
-  //   await supabaseUtil.auth.signOut();
-  //   setSession(null);
-  //   navigate("/")
-  // };
+  const handleSignOut = async () => {
+    await supabaseUtil.auth.signOut();
+    setSession(null);
+    navigate("/")
+  };
 
   return (
     <aside className="hidden lg:flex flex-col fixed left-0 top-16 bottom-0 w-64 bg-white border-r p-6">
@@ -69,7 +70,7 @@ const DashboardSidebar = () => {
               key={item.label}
               onClick={() => {
                 item.label === "Logout"
-                  ? handleLogout(item.path)
+                  ? handleSignOut(item.path)
                   : handleNavigation(item.path);
               }}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left ${

@@ -28,6 +28,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DishForm from "./components/DishForm";
 import EditMenuItemModal from "./components/EditMenuItemModal";
 import QRCodeModal from "./components/QRCodeModal";
+import EditMarketProfileModal from "./components/EditMarketProfileModal";
 
 export const DashboardHome = () => {
   const [market, setMarket] = useState(null);
@@ -55,6 +56,7 @@ export const DashboardHome = () => {
   const [isDishFormVisible, setIsDishFormVisible] = useState(false);
   const [isAddingMenuItem, setIsAddingMenuItem] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchMarketplace = async () => {
@@ -244,6 +246,31 @@ export const DashboardHome = () => {
     }
   };
 
+  const handleProfileUpdate = async (updatedProfile) => {
+    try {
+      // If you need to handle the base64 image differently, do it here
+      const { error } = await supabaseUtil
+        .from("marketplaces")
+        .update({
+          name: updatedProfile.name,
+          tagline: updatedProfile.tagline,
+          cover_image: updatedProfile.cover_image,
+        })
+        .eq("id", market.id);
+
+      if (error) throw error;
+
+      setMarket((prev) => ({
+        ...prev,
+        ...updatedProfile,
+      }));
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile");
+    }
+  };
+
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 ml-0 lg:ml-64">
       {isLoading ? (
@@ -282,7 +309,8 @@ export const DashboardHome = () => {
                   <div className="flex items-center space-x-4">
                     <Avatar
                       src={market?.cover_image || "/api/placeholder/80/80"}
-                      className="w-16 h-16 rounded-xl ring-4 ring-green-100 ring-offset-2"
+                      className="w-16 h-16 rounded-xl ring-4 ring-green-100 ring-offset-2 cursor-pointer"
+                      onClick={() => setIsEditProfileModalOpen(true)}
                     />
                     <div>
                       <h2 className="text-xl font-bold text-black-800">
@@ -440,14 +468,14 @@ export const DashboardHome = () => {
                       {market?.address && (
                         <div className="flex items-center justify-center space-x-3 text-green-600">
                           <LuMapPin className="text-gray-500" />
-                          <span className="text-sm">{market.address}</span>
+                          <span className="text-sm">Technical Support Number</span>
                         </div>
                       )}
                       {market?.contact?.phone && (
                         <div className="flex items-center justify-center space-x-3 text-green-600">
                           <LuPhone className="text-gray-500" />
                           <span className="text-sm">
-                            {market.contact.phone}
+                            07083519662
                           </span>
                         </div>
                       )}
@@ -535,6 +563,14 @@ export const DashboardHome = () => {
           };
           reader.readAsDataURL(file);
         }}
+      />
+
+      <EditMarketProfileModal
+        isOpen={isEditProfileModalOpen}
+        onClose={() => setIsEditProfileModalOpen(false)}
+        market={market}
+        onSave={handleProfileUpdate}
+        isLoading={isLoading}
       />
     </div>
   );

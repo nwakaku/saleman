@@ -20,6 +20,7 @@ export const ProfileForm = ({ onSubmit }) => {
       bankName: "",
     },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (section, e) => {
     const { name, value } = e.target;
@@ -48,13 +49,22 @@ export const ProfileForm = ({ onSubmit }) => {
   const validateForm = () => {
     const errors = [];
 
-    if (!profileData.name) errors.push(" name is required");
+    // Image validation
+    if (!profileData.coverImage) errors.push("Profile image is required");
+
+    // Step 1 validations
+    if (!profileData.name) errors.push("Name is required");
+    if (!profileData.tagline) errors.push("Tagline is required");
     if (!profileData.contact?.phone) errors.push("Phone number is required");
     if (!profileData.contact?.email) errors.push("Email is required");
 
+    // Step 2 validations
     if (step === 2) {
+      if (!profileData.address) errors.push("Address is required");
       if (!profileData.bankDetails?.bankName)
         errors.push("Bank name is required");
+      if (!profileData.bankDetails?.accountName)
+        errors.push("Account name is required");
       if (!profileData.bankDetails?.accountNumber)
         errors.push("Account number is required");
     }
@@ -62,7 +72,7 @@ export const ProfileForm = ({ onSubmit }) => {
     return errors;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const errors = validateForm();
 
     if (errors.length > 0) {
@@ -70,8 +80,16 @@ export const ProfileForm = ({ onSubmit }) => {
       return;
     }
 
-    if (onSubmit) {
-      onSubmit(profileData);
+    setIsSubmitting(true);
+    try {
+      if (onSubmit) {
+        await onSubmit(profileData);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Failed to submit form. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -97,58 +115,79 @@ export const ProfileForm = ({ onSubmit }) => {
               Details
             </h3>
             <div className="relative group mx-auto w-52 h-52">
-              <Avatar
-                src={profileData.coverImage || "/api/placeholder/200/200"}
-                className="w-52 h-52 rounded-2xl 
-                group-hover:scale-105 transition-transform 
-                ring-4 ring-green-100 ring-offset-2"
-              />
+              <div className="relative">
+                <Avatar
+                  src={profileData.coverImage || "/api/placeholder/200/200"}
+                  className="w-52 h-52 rounded-2xl 
+                  group-hover:scale-105 transition-transform 
+                  ring-4 ring-green-100 ring-offset-2"
+                />
+                {!profileData.coverImage && (
+                  <span className="absolute -top-2 -right-2 text-red-500 text-lg">
+                    *
+                  </span>
+                )}
+              </div>
               <label
-                className="absolute bottom-2 right-2 
-                bg-green-500 text-white rounded-full 
+                className={`absolute bottom-2 right-2 
+                ${
+                  !profileData.coverImage
+                    ? "bg-red-500 animate-pulse"
+                    : "bg-green-500"
+                } 
+                text-white rounded-full 
                 p-3 cursor-pointer hover:bg-green-600 
-                transition-colors shadow-md">
+                transition-colors shadow-md`}>
                 <LuImage className="text-xl" />
                 <input
                   type="file"
                   className="hidden"
                   onChange={handleImageUpload}
                   accept="image/*"
+                  required
                 />
               </label>
             </div>
             <div className="space-y-4 max-w-md mx-auto">
               <Input
                 name="name"
-                label=" Name"
+                label="Name"
                 variant="bordered"
                 color="success"
                 value={profileData.name}
                 onChange={(e) => handleInputChange("", e)}
+                required
+                isRequired
               />
               <Input
                 name="tagline"
-                label=" Tagline"
+                label="Tagline"
                 variant="bordered"
                 color="success"
                 value={profileData.tagline}
                 onChange={(e) => handleInputChange("", e)}
+                required
+                isRequired
               />
               <Input
                 name="phone"
-                label=" Phone"
+                label="Phone"
                 variant="bordered"
                 color="success"
                 value={profileData.contact.phone}
                 onChange={(e) => handleInputChange("contact", e)}
+                required
+                isRequired
               />
               <Input
                 name="email"
-                label=" Email"
+                label="Email"
                 variant="bordered"
                 color="success"
                 value={profileData.contact.email}
                 onChange={(e) => handleInputChange("contact", e)}
+                required
+                isRequired
               />
               <div className="flex justify-end">
                 <Button
@@ -176,6 +215,8 @@ export const ProfileForm = ({ onSubmit }) => {
                 color="success"
                 value={profileData.address}
                 onChange={(e) => handleInputChange("", e)}
+                required
+                isRequired
               />
               <Input
                 name="bankName"
@@ -184,6 +225,8 @@ export const ProfileForm = ({ onSubmit }) => {
                 color="success"
                 value={profileData.bankDetails.bankName}
                 onChange={(e) => handleInputChange("bankDetails", e)}
+                required
+                isRequired
               />
               <Input
                 name="accountName"
@@ -192,6 +235,8 @@ export const ProfileForm = ({ onSubmit }) => {
                 color="success"
                 value={profileData.bankDetails.accountName}
                 onChange={(e) => handleInputChange("bankDetails", e)}
+                required
+                isRequired
               />
               <Input
                 name="accountNumber"
@@ -200,6 +245,8 @@ export const ProfileForm = ({ onSubmit }) => {
                 color="success"
                 value={profileData.bankDetails.accountNumber}
                 onChange={(e) => handleInputChange("bankDetails", e)}
+                required
+                isRequired
               />
               <div className="flex justify-between">
                 <Button
@@ -211,12 +258,10 @@ export const ProfileForm = ({ onSubmit }) => {
                 </Button>
                 <Button
                   color="success"
-                  onClick={() => {
-                    // Final submission logic
-                    console.log(" Profile:", profileData);
-                    handleSubmit(profileData);
-                  }}>
-                  Create Profile
+                  onClick={handleSubmit}
+                  isLoading={isSubmitting}
+                  disabled={isSubmitting}>
+                  {isSubmitting ? "Creating Profile..." : "Create Profile"}
                 </Button>
               </div>
             </div>
