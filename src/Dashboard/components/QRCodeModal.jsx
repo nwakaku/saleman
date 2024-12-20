@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useRef, forwardRef } from "react";
+import QRCodeStyling from "qr-code-styling";
 import {
   Modal,
   ModalContent,
@@ -7,17 +9,79 @@ import {
   Button,
   Avatar,
 } from "@nextui-org/react";
-import { QRCodeSVG } from "qrcode.react";
 import { LuQrCode, LuDownload, LuSmartphone, LuStar } from "react-icons/lu";
 
+const QRContainer = forwardRef((_, ref) => {
+  return <div ref={ref} />;
+});
+
+QRContainer.displayName = "QRContainer";
+
 const QRCodeModal = ({ isOpen, onClose, menuUrl, marketName, marketImage }) => {
+  const qrRef = useRef(null);
+  const qrCode = useRef(null);
+
+  // Initialize QR code
+  useEffect(() => {
+    if (menuUrl) {
+      qrCode.current = new QRCodeStyling({
+        width: 350,
+        height: 350,
+        data: menuUrl,
+        dotsOptions: {
+          color: "#854D0E",
+          type: "dots",
+        },
+        backgroundOptions: {
+          color: "#FFFBEB",
+        },
+        imageOptions: {
+          crossOrigin: "anonymous",
+          margin: 10,
+        },
+        qrOptions: {
+          errorCorrectionLevel: "H",
+        },
+        image: marketImage,
+        cornersSquareOptions: {
+          type: "extra-rounded",
+          color: "#854D0E",
+        },
+        cornersDotOptions: {
+          type: "dot",
+          color: "#854D0E",
+        },
+      });
+    }
+  }, [menuUrl, marketImage]);
+
+  // Handle mounting/unmounting of QR code
+  useEffect(() => {
+    if (isOpen && qrCode.current && qrRef.current) {
+      // Clear the container first
+      while (qrRef.current.firstChild) {
+        qrRef.current.removeChild(qrRef.current.firstChild);
+      }
+      // Append the QR code
+      qrCode.current.append(qrRef.current);
+    }
+
+    // Cleanup function
+    return () => {
+      if (qrRef.current) {
+        while (qrRef.current.firstChild) {
+          qrRef.current.removeChild(qrRef.current.firstChild);
+        }
+      }
+    };
+  }, [isOpen, qrCode.current]);
+
   const handleDownload = () => {
-    const canvas = document.querySelector("canvas");
-    if (canvas) {
-      const link = document.createElement("a");
-      link.download = `${marketName}-menu-qr.png`;
-      link.href = canvas.toDataURL();
-      link.click();
+    if (qrCode.current) {
+      qrCode.current.download({
+        extension: "png",
+        name: `${marketName}-menu-qr`,
+      });
     }
   };
 
@@ -33,7 +97,7 @@ const QRCodeModal = ({ isOpen, onClose, menuUrl, marketName, marketImage }) => {
           <div className="flex items-center space-x-2 mb-2">
             <LuQrCode className="text-yellow-800" size={32} />
             <h3 className="text-3xl font-bold text-yellow-900">
-              Saleman Smart Menu 
+              Saleman Smart Menu
             </h3>
           </div>
           <p className="text-yellow-700 flex items-center space-x-1">
@@ -48,14 +112,7 @@ const QRCodeModal = ({ isOpen, onClose, menuUrl, marketName, marketImage }) => {
               <div className="absolute -inset-2 bg-yellow-200 rounded-3xl opacity-50 group-hover:opacity-75 blur-xl transition duration-300"></div>
               <div className="relative bg-white p-6 rounded-3xl shadow-2xl border-2 border-yellow-100 flex flex-col items-center space-y-4">
                 <div className="bg-yellow-50 p-4 rounded-xl shadow-md">
-                  <QRCodeSVG
-                    value={menuUrl}
-                    size={350}
-                    level="H"
-                    includeMargin={true}
-                    fgColor="#854D0E" // Deep amber color
-                    bgColor="#FFFBEB" // Light yellow background
-                  />
+                  <QRContainer ref={qrRef} />
                 </div>
 
                 <div className="flex items-center space-x-4">
