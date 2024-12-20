@@ -45,6 +45,8 @@ export const DashboardHome = () => {
     image: null,
   });
 
+  // console.log(session.user.email)
+
   const navigate = useNavigate();
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [menuUrl, setMenuUrl] = useState("");
@@ -126,6 +128,7 @@ export const DashboardHome = () => {
       address: profileData.address,
       bank_details: profileData.bankDetails,
       menu: [],
+      subscriptionData: null, // Default value when no subscription exists
     };
 
     try {
@@ -145,6 +148,7 @@ export const DashboardHome = () => {
       toast.error("Failed to create marketplace");
     }
   };
+
 
   const addMenuItem = async (newItem) => {
     // Validate inputs

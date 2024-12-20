@@ -341,6 +341,10 @@ export const Settings = () => {
     navigate("/");
   };
 
+  const handleNavigate = () => {
+    navigate("/dashboard/upgrade");
+  }
+
   return (
     <div className="lg:ml-64 pt-0">
       <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white border-b">
@@ -517,6 +521,25 @@ export const Settings = () => {
             </button>
           </div>
         </SettingSection>
+
+        {/* Upgrade Setting */}
+        {/* Upgrade Section */}
+        <div className="bg-gray-100 mt-8 p-6 rounded-lg shadow-sm flex items-center justify-between">
+          <div>
+            <h3 className="text-lg font-medium text-gray-900">
+              Unlock Premium Features
+            </h3>
+            <p className="text-sm text-gray-600 mt-2">
+              Get access to exclusive content and additional features by
+              upgrading your account.
+            </p>
+          </div>
+          <Button
+            onClick={handleNavigate}
+            className="bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg px-6 py-2 shadow-md">
+            Upgrade
+          </Button>
+        </div>
 
         {/* Logout */}
         <SettingSection title="Logout" description="Logout of your account.">

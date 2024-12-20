@@ -1,46 +1,40 @@
 import {
-  LuShoppingCart,  
+  LuShoppingCart,
   LuSettings,
   LuLogOut,
   LuMessagesSquare,
   LuUser,
   LuTornado,
+  LuPalette,
 } from "react-icons/lu";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
 import supabaseUtil from "../utils/supabase";
+import { BsFillArrowThroughHeartFill } from "react-icons/bs";
 
-
-
-const Dashboard = () => {  
-
+const Dashboard = () => {
   return (
     <div className="min-h-screen bg-white text-base">
-      <DashboardSidebar/>
-      
-          
-    <Outlet/>
+      <DashboardSidebar />
+
+      <Outlet />
     </div>
   );
 };
 
 export default Dashboard;
 
-
 const DashboardSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const { user, setSession, } = useMyContext();
-
-
-  
-
+  const { user, setSession } = useMyContext();
 
   const navItems = [
     { icon: LuTornado, label: "Dashboard", path: "/dashboard" },
     { icon: LuShoppingCart, label: "My Orders", path: "/dashboard/orders" },
+    { icon: LuPalette, label: "Customization", path: "/dashboard/upgrade" },
     { icon: LuMessagesSquare, label: "AI Chat", path: "/dashboard/chat" },
     {
       icon: LuUser,
@@ -58,7 +52,7 @@ const DashboardSidebar = () => {
   const handleSignOut = async () => {
     await supabaseUtil.auth.signOut();
     setSession(null);
-    navigate("/")
+    navigate("/");
   };
 
   return (
@@ -86,7 +80,16 @@ const DashboardSidebar = () => {
           ))}
         </div>
       </nav>
-      <div className="mt-auto">
+      <div className="mt-auto flex space-y-2 flex-col">
+        <button
+          onClick={() => {
+            handleNavigation("/dashboard/upgrade");
+          }}
+          className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left bg-blue-100 text-blue-800 hover:bg-blue-200`}>
+          <BsFillArrowThroughHeartFill className="h-5 w-5" />
+          <span className="font-medium">Upgrade</span>
+        </button>
+
         <div className="bg-blue-50 rounded-xl p-4">
           <div className="flex items-center space-x-3">
             <img
@@ -104,7 +107,3 @@ const DashboardSidebar = () => {
     </aside>
   );
 };
-
-
-
-
