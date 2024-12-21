@@ -506,9 +506,11 @@ export const MenuPage2 = () => {
                             <span className="text-white text-sm font-medium">
                               French Cuisine
                             </span>
-                            <span className="bg-red-700 text-white px-3 py-1 rounded-full text-sm">
-                              ₦{item.price?.toFixed(2)}
-                            </span>
+                            <Chip
+                              className="bg-red-900 text-red-200 font-bold mt-2"
+                              size="sm">
+                              ₦ {item.price.toFixed(2)}
+                            </Chip>
                           </div>
                         </div>
                       </div>
