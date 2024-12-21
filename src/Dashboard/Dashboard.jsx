@@ -34,7 +34,11 @@ const DashboardSidebar = () => {
   const navItems = [
     { icon: LuTornado, label: "Dashboard", path: "/dashboard" },
     { icon: LuShoppingCart, label: "My Orders", path: "/dashboard/orders" },
-    { icon: LuPalette, label: "Customization", path: "/dashboard/upgrade" },
+    {
+      icon: LuPalette,
+      label: "Customization",
+      path: "/dashboard/customization",
+    },
     { icon: LuMessagesSquare, label: "AI Chat", path: "/dashboard/chat" },
     {
       icon: LuUser,

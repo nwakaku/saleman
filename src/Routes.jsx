@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   BrowserRouter as Router,
@@ -14,10 +15,12 @@ import Settings from "./Dashboard/Settings";
 import { useMyContext } from "./context/MyContext";
 import Header from "./components/Header";
 import AIChat from "./Dashboard/AIChat";
-import { MenuPage } from "./components/MenuPage";
 import TestimonialPage from "./components/TestimonialPage";
 import ManageCustomers from "./Dashboard/ManageCustomers";
 import UpgradePage from "./Dashboard/UpgradePage";
+import MenuPage from "./components/MenuPage";
+import MenuCustomization from "./Dashboard/Customization";
+// import MenuPage2 from "./components/MenuPage2";
 
 const AppRoutes = () => {
 
@@ -49,6 +52,7 @@ const AppRoutes = () => {
             }>
             <Route path="" element={<DashboardHome />} />
             <Route path="orders" element={<MyOrders />} />
+            <Route path="customization" element={<MenuCustomization />} />
             <Route path="chat" element={<AIChat />} />
             <Route path="customers" element={<ManageCustomers />} />
             <Route path="settings" element={<Settings />} />
