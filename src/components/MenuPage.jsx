@@ -770,10 +770,10 @@ export const MenuPage = () => {
 
         <Toaster position="top-center" />
 
-        <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-8 mb-12 shadow-xl border border-red-200">
+        <div className="bg-white/90 backdrop-blur-xl rounded-2xl lg:p-8 p-4 mb-12 shadow-xl border border-red-200">
           {/* Restaurant Header */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-10 ">
-            <div className="flex flex-wrap justify-center items-center space-x-6">
+            <div className="flex lg:flex-row flex-col justify-center items-center space-x-6">
               <div className="relative">
                 <img
                   src={menuData.cover_image}
