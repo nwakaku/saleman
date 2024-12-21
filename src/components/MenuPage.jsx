@@ -403,12 +403,7 @@ export const MenuPage = () => {
                       onClose();
                     }
                   }}
-                  onTouchStart={() => {
-                    if (phoneNumber) {
-                      handleCheckout();
-                      onClose();
-                    }
-                  }}
+                  
                   disabled={!phoneNumber} // Disable button if phoneNumber is empty
                 >
                   <LuCreditCard className="mr-2" />
@@ -535,7 +530,6 @@ export const MenuPage = () => {
                           variant="solid"
                           className="w-full mt-2"
                           startContent={<LuShoppingCart size={25} />}
-                          onTouchStart={() => addToCart(item)} // Add touch event
                           onClick={(e) => {
                             e.preventDefault();
                             addToCart(item);
@@ -605,9 +599,7 @@ export const MenuPage = () => {
                       size={20}
                     />
                   }
-                  onTouchStart={() => {
-                    navigate(`/testimonials/${menuId}`);
-                  }}
+                  
                   onClick={() => navigate(`/testimonials/${menuId}`)}>
                   <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
                     Customer Testimonials
@@ -741,12 +733,7 @@ export const MenuPage = () => {
                       onClose();
                     }
                   }}
-                  onTouchStart={() => {
-                    if (phoneNumber) {
-                      handleCheckout();
-                      onClose();
-                    }
-                  }}
+                  
                   disabled={!phoneNumber} // Disable button if phoneNumber is empty
                 >
                   <LuCreditCard className="mr-2" />
@@ -884,7 +871,6 @@ export const MenuPage = () => {
                         </div>
                         <div className="mt-auto">
                           <Button
-                            onTouchStart={() => addToCart(item)} // Add touch event
                             onClick={(e) => {
                               e.preventDefault();
                               addToCart(item);
@@ -955,9 +941,7 @@ export const MenuPage = () => {
                     size={20}
                   />
                 }
-                onTouchStart={() => {
-                  navigate(`/testimonials/${menuId}`);
-                }}
+               
                 onClick={() => navigate(`/testimonials/${menuId}`)}>
                 <span className="text-white group-hover:text-white font-semibold">
                   Customer Testimonials
