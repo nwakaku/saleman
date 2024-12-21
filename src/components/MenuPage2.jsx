@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
-  CardBody,
   Avatar,
   Chip,
   CircularProgress,
@@ -17,7 +15,6 @@ import {
 } from "@nextui-org/react";
 import supabaseUtil from "../utils/supabase";
 import {
-  LuClock,
   LuShoppingCart,
   LuStar,
   LuBox,
@@ -264,9 +261,6 @@ export const MenuPage2 = () => {
     return text.slice(0, maxLength) + "...";
   };
 
-  const strawberry = () => {
-
-  }
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 py-12 px-4">
@@ -415,10 +409,10 @@ export const MenuPage2 = () => {
 
         <Toaster position="top-center" />
 
-        <div className="bg-white/90 backdrop-blur-xl rounded-2xl p-8 mb-12 shadow-xl border border-red-200">
+        <div className="bg-white/90 backdrop-blur-xl rounded-2xl lg:p-8 p-4 mb-12 shadow-xl border border-red-200">
           {/* Restaurant Header */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-10 ">
-            <div className="flex flex-wrap justify-center items-center space-x-6">
+            <div className="flex lg:flex-row flex-col justify-center items-center lg:space-x-6 gap-2 ">
               <div className="relative">
                 <img
                   src={menuData.cover_image}
@@ -452,25 +446,39 @@ export const MenuPage2 = () => {
           {menuData.menu && menuData.menu.length > 0 ? (
             <div className="flex flex-col space-y-4">
               <div className="flex flex-row space-x-4 overflow-x-auto scrollbar-hide pb-2 ">
-                <Chip className="bg-white border shrink-0 cursor-pointer " radius="sm">
+                <Chip
+                  className="bg-white border shrink-0 cursor-pointer "
+                  radius="sm">
                   Food
                 </Chip>
-                <Chip className="shrink-0 cursor-pointer text-red-900" radius="sm">
+                <Chip
+                  className="shrink-0 cursor-pointer text-red-900"
+                  radius="sm">
                   Proteins
                 </Chip>
-                <Chip className="shrink-0 cursor-pointer text-red-900" radius="sm">
+                <Chip
+                  className="shrink-0 cursor-pointer text-red-900"
+                  radius="sm">
                   Pastries
                 </Chip>
-                <Chip className="shrink-0 cursor-pointer text-red-900" radius="sm">
+                <Chip
+                  className="shrink-0 cursor-pointer text-red-900"
+                  radius="sm">
                   Cakes
                 </Chip>
-                <Chip className="shrink-0 cursor-pointer text-red-900" radius="sm">
+                <Chip
+                  className="shrink-0 cursor-pointer text-red-900"
+                  radius="sm">
                   Shawarma
                 </Chip>
-                <Chip className="shrink-0 cursor-pointer text-red-900" radius="sm">
+                <Chip
+                  className="shrink-0 cursor-pointer text-red-900"
+                  radius="sm">
                   Drinks
                 </Chip>
-                <Chip className="shrink-0 cursor-pointer text-red-900" radius="sm">
+                <Chip
+                  className="shrink-0 cursor-pointer text-red-900"
+                  radius="sm">
                   Snacks
                 </Chip>
               </div>
@@ -561,21 +569,21 @@ export const MenuPage2 = () => {
                   href="https://facebook.com/saleman"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-700 hover:text-white-900 transition-colors duration-300 bg-white/90 lg:border-2 border-white-400 rounded-full lg:p-2">
+                  className="text-slate-700 hover:text-white-900 transition-colors duration-300 bg-white/90 lg:border-2 border-white-400 rounded-full p-1 lg:p-2">
                   <LuFacebook size={20} />
                 </a>
                 <a
                   href="https://instagram.com/saleman.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-700 hover:text-white-900 transition-colors duration-300 bg-white/90 lg:border-2 border-white-400 rounded-full lg:p-2">
+                  className="text-slate-700 hover:text-white-900 transition-colors duration-300 bg-white/90 lg:border-2 border-white-400 rounded-full p-1 lg:p-2">
                   <LuInstagram size={20} />
                 </a>
                 <a
                   href="https://twitter.com/saleman"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-700 hover:text-white-900 transition-colors duration-300 bg-white/90 lg:border-2 border-white-400 rounded-full lg:p-2">
+                  className="text-slate-700 hover:text-white-900 transition-colors duration-300 bg-white/90 lg:border-2 border-white-400 rounded-full p-1 lg:p-2">
                   <LuTwitter size={20} />
                 </a>
               </div>
@@ -600,8 +608,6 @@ export const MenuPage2 = () => {
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );

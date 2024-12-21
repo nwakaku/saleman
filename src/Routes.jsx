@@ -18,9 +18,8 @@ import AIChat from "./Dashboard/AIChat";
 import TestimonialPage from "./components/TestimonialPage";
 import ManageCustomers from "./Dashboard/ManageCustomers";
 import UpgradePage from "./Dashboard/UpgradePage";
-import MenuPage from "./components/MenuPage";
 import MenuCustomization from "./Dashboard/Customization";
-// import MenuPage2 from "./components/MenuPage2";
+import MenuRouter from "./components/MenuRouter";
 
 const AppRoutes = () => {
 
@@ -58,7 +57,7 @@ const AppRoutes = () => {
             <Route path="settings" element={<Settings />} />
             <Route path="upgrade" element={<UpgradePage />} />
           </Route>
-          <Route path="/menu/:menuId" element={<MenuPage />} />
+          <Route path="/menu/:menuId" element={<MenuRouter />} />
           <Route path="/testimonials/:menuId" element={<TestimonialPage />} />
         </Routes>
       </div>

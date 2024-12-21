@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import { useEffect } from "react";
 import supabaseUtil from "../utils/supabase";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { useMyContext } from "../context/MyContext";
 
 const ThemeOption = ({ title, description, selected, image, onSelect }) => (
@@ -167,6 +167,8 @@ const MenuCustomization = () => {
       <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white border-b">
         <h1 className="text-xl font-bold sm:text-2xl">Menu Customization</h1>
       </div>
+
+      <Toaster/>
 
       <Card className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 my-2">
         <SettingSection
