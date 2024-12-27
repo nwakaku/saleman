@@ -80,11 +80,12 @@ const Stores = () => {
   };
 
   return (
-    <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12 py-8 ">
+    <div className="max-w-7xl mx-auto lg:py-8 py-4 ">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl sm:text-2xl font-extrabold">
+        {/* <h3 className="text-xl sm:text-2xl font-extrabold">
           Stores to help you save
-        </h3>
+        </h3> */}
+        <div></div>
         <div className="flex gap-2 sm:gap-4">
           <button
             onClick={() => scroll("left")}
@@ -126,10 +127,6 @@ const Stores = () => {
           ))}
         </div>
       </div>
-
-      <p className="text-right text-xs sm:text-sm font-light text-gray-600 mt-4">
-        Offers subject to terms and eligibility
-      </p>
     </div>
   );
 };

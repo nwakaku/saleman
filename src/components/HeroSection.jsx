@@ -1,4 +1,4 @@
-import { Button, Image } from "@nextui-org/react";
+import { Button, Card, Image } from "@nextui-org/react";
 import { LuBox, LuCreditCard, LuMessageCircle, LuQrCode } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
@@ -18,54 +18,72 @@ const HeroSection = () => {
     }
 
   return (
-    <div className=" bg-[#003D29] py-2">
-      <div className="grid lg:grid-cols-2 px-8 ">
-        <div className="text-white justify-center items-center flex">
-          <div className="flex flex-col space-y-2 px-4 justify-center items-center lg:items-start">
-            <div className="space-y-4">
-              <h3 className="lg:text-4xl text-2xl font-bold text-center lg:text-left">
-                Dining Reimagined: AI-Powered Smart Menu & CRM.
-              </h3>
+    <div className="w-full bg-[#F7F9FC] py-8 ">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ">
+          {/* Left Column */}
+          <div className="flex justify-center lg:justify-start">
+            <div className="flex flex-col space-y-6 max-w-xl">
+              <div className="space-y-4">
+                <h1 className="text-2xl lg:text-4xl font-bold text-center lg:text-left text-[#003D29]">
+                  Dining Reimagined: AI-Powered Smart Menu & CRM.
+                </h1>
 
-              <div className="flex flex-wrap justify-center md:justify-start gap-2 text-sm md:text-base">
-                <div className="flex items-center space-x-1">
-                  <LuQrCode size={22} />
-                  <span>Scan & Explore</span>
-                </div>
-                <div className="hidden md:block">-</div>
-                <div className="flex items-center space-x-1">
-                  <LuBox size={22} />
-                  <span>Order Precisely</span>
-                </div>
-                <div className="hidden md:block">-</div>
-                <div className="flex items-center space-x-1">
-                  <LuCreditCard size={22} />
-                  <span>Pay Seamlessly</span>
-                </div>
-                <div className="hidden md:block">-</div>
-                <div className="flex items-center space-x-1">
-                  <LuMessageCircle size={22} />
-                  <span>Share Info</span>
+                <p className="hidden lg:block text-gray-600">
+                  Saleman works with any type of restaurant, from cafes and food
+                  trucks and fast casual. Digitize your experience for lower
+                  operational costs, real-time monitoring, and all-year-round
+                  flexibility.
+                </p>
+
+                <div className="flex flex-wrap justify-center lg:justify-start gap-4 lg:gap-6 text-sm md:text-base">
+                  <div className="flex items-center space-x-2">
+                    <LuQrCode size={22} />
+                    <span>Menu</span>
+                  </div>
+                  <div className="hidden md:block text-gray-400">•</div>
+                  <div className="flex items-center space-x-2">
+                    <LuBox size={22} />
+                    <span>Waiter</span>
+                  </div>
+                  <div className="hidden md:block text-gray-400">•</div>
+                  <div className="flex items-center space-x-2">
+                    <LuCreditCard size={22} />
+                    <span>Cashier</span>
+                  </div>
+                  <div className="hidden md:block text-gray-400">•</div>
+                  <div className="flex items-center space-x-2">
+                    <LuMessageCircle size={22} />
+                    <span>Manager Ad</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Button
-              onClick={handleRoute}
-              size="lg"
-              className="bg-green-600 text-white rounded-full ">
-              Get Started
-            </Button>
+              <div className="flex  gap-4 justify-center lg:justify-start">
+                <Button
+                  onClick={handleRoute}
+                  className="bg-green-600 text-white rounded-full">
+                  Get Started
+                </Button>
+                <Button
+                  
+                  className="border border-slate-600 text-slate-900 rounded-full">
+                  Watch Demo
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="p-2 hidden lg:block">
-          <Image
-            width="100%"
-            height={200}
-            src="https://www.instacart.com/assets/homepage/affordability-hero-3a7ab0e389e5f4f278b4715eec95775f1d7d969323d22277199898ce605c6f56.png"
-            fallbackSrc="https://via.placeholder.com/300x200"
-            alt="NextUI Image with fallback"
-          />
+
+          {/* Right Column */}
+          <Card className="p-2 hidden lg:flex justify-end shadow-lg bg-[#F7F9FC] items-end">
+            {" "}
+            <Image
+              width="80%"
+              src="https://cdn-bnklg.nitrocdn.com/WQiharaAoSUWjdmYdQaoZKLXawgJIPOR/assets/images/source/rev-849fa93/www.upmenu.com/wp-content/uploads/2023/03/qr-code-restaurant-ordering-process-2.jpg.webp"
+              fallbackSrc="https://via.placeholder.com/300x200"
+              alt="NextUI Image with fallback"
+            />{" "}
+          </Card>
         </div>
       </div>
     </div>

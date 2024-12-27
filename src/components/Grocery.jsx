@@ -7,28 +7,49 @@ export const Grocery = () => {
       description:
         "Using their smartphone’s camera, they simply scan the code. This instantly opens a responsive digital menu that displays all available dishes.",
       image:
-        "https://www.instacart.com/image-server/686x514/filters:fill(FFF,true):format(webp)/www.instacart.com/assets/homepage/choose-what-you-want-efca561a8f08c2a5ce5ed77df6c10bf54d4439ca8434f12e9d9641bf91dd2b43.jpg",
+        "https://www.menutiger.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FwhyLove_1.dc110fdf.webp&w=3840&q=75",
     },
     {
       title: "FeedBack System",
       description:
         "The feedback system collects customer insights through quick post-meal surveys, offering star ratings, comments, and suggestions",
       image:
-        "https://www.instacart.com/image-server/686x514/filters:fill(FFF,true):format(webp)/www.instacart.com/assets/homepage/see-real-time-updates-1d23ec0f423b24300c0cd6abcb4724f36b0af840fbdf106aa5f140e835cff7eb.jpg",
+        "https://www.menutiger.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FwhyLove_2.3100ef2c.webp&w=3840&q=75",
     },
     {
       title: "Customers are delighted",
       description:
         "Contactless experience that allows them to browse menus, orders, payments, and provide feedback—all from their smartphones.",
       image:
-        "https://www.instacart.com/image-server/686x514/filters:fill(FFF,true):format(webp)/www.instacart.com/assets/homepage/get-your-items-same-day-c85bb8474d3f09fe7eec97688767459f93852e29bf3fa849ab410f73d6f91b3a.jpg",
+        "https://www.menutiger.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FwhyLove_3.dbcb6972.webp&w=3840&q=75",
+    },
+    {
+      title: "Create Cost Effective Solution",
+      description:
+        "Our QR code menu is a cost-effective solution that reduces the need for Menu, Cashier, manager and minimizes staff workload.",
+      image:
+        "https://www.menutiger.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FwhyLove_4.0a38e366.webp&w=3840&q=75",
+    },
+    {
+      title: "Increase Order Accuracy",
+      description:
+        "Bid farewell to incorrect dishes as a menu QR code guarantees precision, enhancing overall customer satisfaction.",
+      image:
+        "https://www.menutiger.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FwhyLove_5.7bde8c69.webp&w=3840&q=75",
+    },
+    {
+      title: "Enhance customer experience",
+      description:
+        "Elevate the dining experience with our customer-friendly interactive restaurant menu features, turning satisfied customers into loyal patrons.",
+      image:
+        "https://www.menutiger.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FwhyLove_6.257286ac.webp&w=3840&q=75",
     },
   ];
 
   return (
-    <div className=" space-y-24 max-w-full px-4 sm:px-6 lg:px-12 py-12 mx-auto">
+    <div className=" space-y-24 max-w-7xl px-4 lg:px-4 py-12 mx-auto">
       {/* QR Code Section */}
-      <div className="bg-[#B1E5D5] rounded-lg">
+      <div className="bg-[#B1E5D5] rounded-lg ">
         <div className="flex justify-between items-center max-w-full mx-auto ">
           <div className="w-2/6 px-8 hidden lg:block">
             <img
@@ -65,7 +86,7 @@ export const Grocery = () => {
           Smart Menu and CRM you can count on
         </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto">
           {deliveryCards.map((card, index) => (
             <Card
               key={index}
