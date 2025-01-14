@@ -4,7 +4,7 @@ const AllFunctions = () => {
   // Store data array
   const stores = [
     {
-      name: "Ordering Dashboard",
+      name: "Ordering",
       image:
         "https://www.menutiger.com/_next/static/media/feature_1.2f0c7c52.svg",
     },

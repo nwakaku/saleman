@@ -412,8 +412,8 @@ export const DashboardHome = () => {
                                 {item.name}
                               </h4>
                               {item.description && (
-                                <p className="text-gray-600 text-sm mt-1">
-                                  {item.description}
+                                <p className="text-gray-600 text-left text-sm mt-1">
+                                  {item.description.substring(0, 20) + "..."}
                                 </p>
                               )}
                             </div>
@@ -472,15 +472,15 @@ export const DashboardHome = () => {
                       {market?.address && (
                         <div className="flex items-center justify-center space-x-3 text-green-600">
                           <LuMapPin className="text-gray-500" />
-                          <span className="text-sm">Technical Support Number</span>
+                          <span className="text-sm">
+                            Technical Support Number
+                          </span>
                         </div>
                       )}
                       {market?.contact?.phone && (
                         <div className="flex items-center justify-center space-x-3 text-green-600">
                           <LuPhone className="text-gray-500" />
-                          <span className="text-sm">
-                            07083519662
-                          </span>
+                          <span className="text-sm">07083519662</span>
                         </div>
                       )}
                     </div>

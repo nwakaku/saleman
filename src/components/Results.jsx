@@ -9,23 +9,24 @@ const Results = () => {
 
   const statistics = [
     {
-      value: "1 Thousand Dishes",
+      value: "Smart QR Code",
       description:
-        "Available products across all our partnered restaurants in Africa",
+        "Interactive menus that are easy to scan, browse, and order from.",
     },
     {
-      value: "8,000 Restaurants",
+      value: "AI CRM",
       description:
-        "Partner restaurants across multiple cities delivering quality dishes",
+        "Retain your customers with personalized experiences, loyalty programs, and smart analytics.",
     },
     {
-      value: "1,00 Cities",
+      value: "Payment Systems",
       description:
-        "Cities covered across Africa with fast and reliable service",
+        "Accept payments securely with trusted platforms like Paystack, Visa, and Google Pay.",
     },
     {
-      value: "Millions of orders",
-      description: "Successfully processed orders with satisfied customers",
+      value: "Custom Solutions",
+      description:
+        "Tailored tools that optimize operations, reduce costs, and enhance customer satisfaction.",
     },
   ];
 
@@ -44,15 +45,16 @@ const Results = () => {
   return (
     <div className="px-4 py-16">
       <div className="max-w-7xl mx-auto space-y-12">
+        <h3 className="text-4xl font-bold  text-center text-emerald-600">
+          Why Choose Us?
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {statistics.map((stat, index) => (
             <Card
               key={index}
               className="group hover:shadow-lg transition-shadow duration-300">
               <CardHeader className="pb-2 pt-6 flex items-center justify-center">
-                <h4 className="text-2xl font-bold text-emerald-600 text-center">
-                  {stat.value}
-                </h4>
+                <h4 className="text-2xl  text-center">{stat.value}</h4>
               </CardHeader>
               <CardBody className="py-4">
                 <p className="text-gray-600 text-center font-normal">
@@ -77,7 +79,10 @@ const Results = () => {
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             className="absolute inset-0 m-auto lg:w-32 lg:h-32 w-16 h-16 z-20 flex items-center justify-center bg-red-600 rounded-full shadow-lg hover:bg-red-700 transition-all duration-300 hover:scale-110 focus:outline-none">
-            <LuPlay className="lg:w-16 lg:h-16 w-8 h-8 text-white" fill="white" />
+            <LuPlay
+              className="lg:w-16 lg:h-16 w-8 h-8 text-white"
+              fill="white"
+            />
           </button>
 
           <div className="relative w-full h-full">

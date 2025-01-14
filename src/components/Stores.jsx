@@ -23,7 +23,7 @@ const Stores = () => {
       name: "McDonald",
       time: "By 11:22am",
       image:
-        "https://pbs.twimg.com/profile_images/1863976445556449280/OsLJTN-J_400x400.jpg",
+        "https://pbs.twimg.com/profile_images/1876306501502955520/fvzstVXw_400x400.jpg",
     },
     {
       name: "Starbucks",

@@ -4,18 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
 
 const HeroSection = () => {
-
   const { session, onOpen } = useMyContext();
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleRoute = () => {
-       if (session) {
-         navigate("/dashboard");
-       } else {
-         onOpen(); // Open the authentication modal
-       }
+  const handleRoute = () => {
+    if (session) {
+      navigate("/dashboard");
+    } else {
+      onOpen(); // Open the authentication modal
     }
+  };
 
   return (
     <div className="w-full bg-[#F7F9FC] py-8 ">
@@ -26,25 +25,25 @@ const HeroSection = () => {
             <div className="flex flex-col space-y-6 max-w-xl">
               <div className="space-y-4">
                 <h1 className="text-2xl lg:text-4xl font-bold text-center lg:text-left text-[#003D29]">
-                  Dining Reimagined: AI-Powered Smart Menu & CRM.
+                  Revolutionize Your Small Business with AI.
                 </h1>
 
                 <p className="hidden lg:block text-gray-600">
-                  Saleman works with any type of restaurant, from cafes and food
-                  trucks and fast casual. Digitize your experience for lower
-                  operational costs, real-time monitoring, and all-year-round
-                  flexibility.
+                  AI Solutions for Restaurants, and Super Markets. Simplify
+                  operations, delight customers, and grow your revenue with our
+                  tools. From smart menus to seamless customer relationship
+                  management, we help you take your business to the next level.
                 </p>
 
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4 lg:gap-6 text-sm md:text-base">
                   <div className="flex items-center space-x-2">
                     <LuQrCode size={22} />
-                    <span>Menu</span>
+                    <span>QRCode</span>
                   </div>
                   <div className="hidden md:block text-gray-400">•</div>
                   <div className="flex items-center space-x-2">
                     <LuBox size={22} />
-                    <span>Waiter</span>
+                    <span>Order</span>
                   </div>
                   <div className="hidden md:block text-gray-400">•</div>
                   <div className="flex items-center space-x-2">
@@ -65,9 +64,7 @@ const HeroSection = () => {
                   className="bg-green-600 text-white rounded-full">
                   Get Started
                 </Button>
-                <Button
-                  
-                  className="border border-slate-600 text-slate-900 rounded-full">
+                <Button className="border border-slate-600 text-slate-900 rounded-full">
                   Watch Demo
                 </Button>
               </div>
@@ -75,14 +72,38 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column */}
-          <Card className="p-2 hidden lg:flex justify-end shadow-lg bg-[#F7F9FC] items-end">
-            {" "}
+          <Card className="p-2 hidden lg:flex justify-end shadow-lg bg-[#F7F9FC] items-end relative animate-border">
             <Image
               width="80%"
               src="https://cdn-bnklg.nitrocdn.com/WQiharaAoSUWjdmYdQaoZKLXawgJIPOR/assets/images/source/rev-849fa93/www.upmenu.com/wp-content/uploads/2023/03/qr-code-restaurant-ordering-process-2.jpg.webp"
               fallbackSrc="https://via.placeholder.com/300x200"
               alt="NextUI Image with fallback"
-            />{" "}
+            />
+            <style>
+              {`
+                  .animate-border {
+                    position: relative;
+                    border: 2px solid transparent;
+                    border-radius: 8px; /* Add if needed */
+                    background: linear-gradient(white, white) padding-box,
+                      linear-gradient(90deg, #ff7f50, #6a5acd, #32cd32, #ff7f50) border-box;
+                    background-origin: border-box;
+                    animation: borderMove 5s linear infinite;
+                  }
+
+                  @keyframes borderMove {
+                    0% {
+                      background-position: 0% 50%;
+                    }
+                    50% {
+                      background-position: 100% 50%;
+                    }
+                    100% {
+                      background-position: 0% 50%;
+                    }
+                  }
+                `}
+            </style>
           </Card>
         </div>
       </div>
