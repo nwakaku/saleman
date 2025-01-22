@@ -24,8 +24,8 @@ const HeroSection = () => {
           <div className="flex justify-center lg:justify-start">
             <div className="flex flex-col space-y-6 max-w-xl">
               <div className="space-y-4">
-                <h1 className="text-2xl lg:text-4xl font-bold text-center lg:text-left text-[#003D29]">
-                  Revolutionize Your Small Business with AI.
+                <h1 className="text-2xl lg:text-5xl font-bold text-center lg:text-left text-[#003D29]">
+                  Revolutionize your Business with AI.
                 </h1>
 
                 <p className="hidden lg:block text-gray-600">
@@ -72,38 +72,13 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column */}
-          <Card className="p-2 hidden lg:flex justify-end shadow-lg bg-[#F7F9FC] items-end relative animate-border">
+          <Card className="p-2 hidden lg:flex justify-end shadow-none  items-end relative ">
             <Image
               width="80%"
-              src="https://cdn-bnklg.nitrocdn.com/WQiharaAoSUWjdmYdQaoZKLXawgJIPOR/assets/images/source/rev-849fa93/www.upmenu.com/wp-content/uploads/2023/03/qr-code-restaurant-ordering-process-2.jpg.webp"
+              src="https://www.finedinemenu.com/_next/image/?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fvzi1jds2%2Fproduction%2Fa3b1323783b36088112bdf40c677ed95915a43fa-1800x1800.png&w=1200&q=75"
               fallbackSrc="https://via.placeholder.com/300x200"
               alt="NextUI Image with fallback"
             />
-            <style>
-              {`
-                  .animate-border {
-                    position: relative;
-                    border: 2px solid transparent;
-                    border-radius: 8px; /* Add if needed */
-                    background: linear-gradient(white, white) padding-box,
-                      linear-gradient(90deg, #ff7f50, #6a5acd, #32cd32, #ff7f50) border-box;
-                    background-origin: border-box;
-                    animation: borderMove 5s linear infinite;
-                  }
-
-                  @keyframes borderMove {
-                    0% {
-                      background-position: 0% 50%;
-                    }
-                    50% {
-                      background-position: 100% 50%;
-                    }
-                    100% {
-                      background-position: 0% 50%;
-                    }
-                  }
-                `}
-            </style>
           </Card>
         </div>
       </div>
