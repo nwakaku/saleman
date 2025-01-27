@@ -74,12 +74,28 @@ const AddressCard = ({ address, isDefault, onEdit, onSetDefault }) => (
   </div>
 );
 
-const PaymentMethodCard = ({ method, isDefault, onEdit, onSetDefault }) => (
+// Modified PaymentMethodCard component to show bank account details
+const WithdrawalAccountCard = ({
+  account,
+  isDefault,
+  onEdit,
+  onSetDefault,
+}) => (
   <div className="bg-white border rounded-lg p-4 mb-4">
     <div className="flex justify-between items-start">
       <div>
-        <p className="font-medium">•••• •••• •••• {method.last_four}</p>
-        <p className="text-sm text-gray-600 mt-1">Expires {method.expiry}</p>
+        <p className="font-medium">
+          <span className="font-bold">Bank Name : </span>
+          {account.bank_name}
+        </p>
+        <p className="text-sm text-gray-600 mt-1">
+          <span className="font-bold">Account Number : </span>{" "}
+          {account.account_number}
+        </p>
+        <p className="text-sm text-gray-600">
+          <span className="font-bold">Account Name : </span>{" "}
+          {account.account_holder_name}
+        </p>
         {isDefault && (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">
             Default
@@ -102,6 +118,7 @@ const PaymentMethodCard = ({ method, isDefault, onEdit, onSetDefault }) => (
   </div>
 );
 
+
 export const Settings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -111,7 +128,6 @@ export const Settings = () => {
 
   // States from database
   const [addresses, setAddresses] = useState([]);
-  const [paymentMethods, setPaymentMethods] = useState([]);
   const [notifications, setNotifications] = useState(
     session?.user?.notification_preferences || {
       email: true,
@@ -127,6 +143,8 @@ export const Settings = () => {
   // Add these new state and handler functions after the existing state declarations
   const [editingField, setEditingField] = useState(null);
   const [fieldValue, setFieldValue] = useState("");
+  // Replace existing payment methods state and fetch function
+  const [withdrawalAccounts, setWithdrawalAccounts] = useState([]);
 
   const handleEditField = (field, value) => {
     setEditingField(field);
@@ -170,27 +188,46 @@ export const Settings = () => {
     }
   }, [user.id]);
 
-  const fetchPaymentMethods = useCallback(async () => {
+  const fetchWithdrawalAccounts = useCallback(async () => {
     try {
       const { data, error } = await supabaseUtil
-        .from("profiles")
-        .select("payment_methods")
-        .eq("id", user.id)
+        .from("marketplaces")
+        .select("bank_details")
+        .eq("user_id", user.id)
         .single();
 
       if (error) throw error;
-      setPaymentMethods(data.payment_methods || []);
+
+      // Handle the object structure of bank_details
+      if (data?.bank_details) {
+        const bankDetails = data.bank_details;
+        // Convert the single object to an array format expected by the UI
+        const formattedAccount = [
+          {
+            id: crypto.randomUUID(), // Generate an ID for the existing account
+            bank_name: bankDetails.bankName,
+            account_holder_name: bankDetails.accountName,
+            account_number: bankDetails.accountNumber,
+            is_default: true, // Since it's the only account
+          },
+        ];
+
+        setWithdrawalAccounts(formattedAccount);
+      } else {
+        setWithdrawalAccounts([]);
+      }
     } catch (error) {
-      console.error("Error fetching payment methods:", error);
+      console.error("Error fetching withdrawal accounts:", error);
+      setWithdrawalAccounts([]);
     }
   }, [user.id]);
 
   // Then the useEffect
   useEffect(() => {
     fetchAddresses();
-    fetchPaymentMethods();
+    fetchWithdrawalAccounts();
     refreshUser();
-  }, [fetchAddresses, fetchPaymentMethods]);
+  }, [fetchAddresses, fetchWithdrawalAccounts]);
 
   // Update notification preferences
   const handleNotificationChange = async (key, value) => {
@@ -247,38 +284,9 @@ export const Settings = () => {
     setLoading(false);
   };
 
-  // Update payment method operations
-  const handlePaymentMethodUpdate = async (isNew = false) => {
-    setLoading(true);
-    try {
-      const newPaymentMethod = {
-        id: isNew ? crypto.randomUUID() : editItem.id,
-        last_four: formData.last_four,
-        expiry: formData.expiry,
-        is_default: formData.is_default || false,
-      };
-
-      let updatedPaymentMethods;
-      if (isNew) {
-        updatedPaymentMethods = [...paymentMethods, newPaymentMethod];
-      } else {
-        updatedPaymentMethods = paymentMethods.map((method) =>
-          method.id === editItem.id ? newPaymentMethod : method
-        );
-      }
-
-      const { error } = await supabaseUtil
-        .from("profiles")
-        .update({ payment_methods: updatedPaymentMethods })
-        .eq("id", session?.user?.id);
-
-      if (error) throw error;
-      setPaymentMethods(updatedPaymentMethods);
-      handleCloseModal();
-    } catch (error) {
-      console.error("Error updating payment method:", error);
-    }
-    setLoading(false);
+  // Updated withdrawal account update handler
+  const handleWithdrawalAccountUpdate = async () => {
+    alert("soon");
   };
 
   // Modal handlers
@@ -316,22 +324,23 @@ export const Settings = () => {
     }
   };
 
-  const handleSetDefaultPayment = async (paymentId) => {
+  // Replace default payment handler
+  const handleSetDefaultWithdrawal = async (accountId) => {
     try {
-      const updatedPaymentMethods = paymentMethods.map((method) => ({
-        ...method,
-        is_default: method.id === paymentId,
+      const updatedAccounts = withdrawalAccounts.map((account) => ({
+        ...account,
+        is_default: account.id === accountId,
       }));
 
       const { error } = await supabaseUtil
-        .from("profiles")
-        .update({ payment_methods: updatedPaymentMethods })
-        .eq("id", user.id);
+        .from("marketplaces")
+        .update({ bank_details: updatedAccounts })
+        .eq("user_id", user.id);
 
       if (error) throw error;
-      setPaymentMethods(updatedPaymentMethods);
+      setWithdrawalAccounts(updatedAccounts);
     } catch (error) {
-      console.error("Error setting default payment method:", error);
+      console.error("Error setting default withdrawal account:", error);
     }
   };
 
@@ -343,7 +352,7 @@ export const Settings = () => {
 
   const handleNavigate = () => {
     navigate("/dashboard/upgrade");
-  }
+  };
 
   return (
     <div className="lg:ml-64 pt-0">
@@ -472,25 +481,25 @@ export const Settings = () => {
 
         {/* Payment Methods */}
         <SettingSection
-          title="Payment Methods"
-          description="Manage your payment options.">
+          title="Withdrawal Accounts"
+          description="Manage your bank accounts for receiving payments.">
           <div className="space-y-4">
-            {paymentMethods.map((method) => (
-              <PaymentMethodCard
-                key={method.id}
-                method={method}
-                isDefault={method.is_default}
-                onEdit={() => handleOpenModal("payment", method)}
+            {withdrawalAccounts.map((account) => (
+              <WithdrawalAccountCard
+                key={account.id}
+                account={account}
+                isDefault={account.is_default}
+                onEdit={() => handleOpenModal("withdrawal", account)}
                 onSetDefault={async () => {
-                  await handleSetDefaultPayment(method.id);
+                  await handleSetDefaultWithdrawal(account.id);
                 }}
               />
             ))}
             <button
-              onClick={() => handleOpenModal("payment")}
+              onClick={() => handleOpenModal("withdrawal")}
               className="w-full py-2 px-4 border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:border-gray-400 hover:text-gray-700 flex items-center justify-center">
               <LuPlus className="h-5 w-5 mr-2" />
-              Add New Payment Method
+              Add New Withdrawal Account
             </button>
           </div>
         </SettingSection>
@@ -623,22 +632,35 @@ export const Settings = () => {
                     />
                   </div>
                 )}
-                {modalType === "payment" && (
+
+                {/* // Simplify the modal content to match the data structure */}
+                {modalType === "withdrawal" && (
                   <div className="space-y-4">
                     <Input
-                      label="Last 4 Digits"
-                      maxLength={4}
-                      value={formData.last_four || ""}
+                      label="Bank Name"
+                      value={formData.bank_name || ""}
                       onChange={(e) =>
-                        setFormData({ ...formData, last_four: e.target.value })
+                        setFormData({ ...formData, bank_name: e.target.value })
                       }
                     />
                     <Input
-                      label="Expiry Date"
-                      placeholder="MM/YY"
-                      value={formData.expiry || ""}
+                      label="Account Number"
+                      value={formData.account_number || ""}
                       onChange={(e) =>
-                        setFormData({ ...formData, expiry: e.target.value })
+                        setFormData({
+                          ...formData,
+                          account_number: e.target.value,
+                        })
+                      }
+                    />
+                    <Input
+                      label="Account Holder Name"
+                      value={formData.account_holder_name || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          account_holder_name: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -665,8 +687,8 @@ export const Settings = () => {
                   onPress={() => {
                     if (modalType === "address") {
                       handleAddressUpdate(!editItem);
-                    } else if (modalType === "payment") {
-                      handlePaymentMethodUpdate(!editItem);
+                    } else if (modalType === "withdrawal") {
+                      handleWithdrawalAccountUpdate(!editItem);
                     } else {
                       handleUpdateProfile();
                     }

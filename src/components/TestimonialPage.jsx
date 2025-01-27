@@ -381,7 +381,7 @@ export const TestimonialPage = () => {
                   }}
                   onClick={() => navigate(`/menu/${menuId}`)}>
                   <span className="text-yellow-800 group-hover:text-yellow-900 font-semibold">
-                    Customer Testimonials
+                    Back to Menu
                   </span>
                 </Button>
               </div>
