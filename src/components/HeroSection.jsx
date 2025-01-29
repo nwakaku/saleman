@@ -16,6 +16,12 @@ const HeroSection = () => {
     }
   };
 
+  const handleWatchDemo = () => {
+    window.open("https://youtu.be/lWacp6wCIOQ?si=wu2ecfqR1vDxEpd2", "_blank");
+  };
+
+  
+
   return (
     <div className="w-full bg-[#F7F9FC] py-8 ">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +70,9 @@ const HeroSection = () => {
                   className="bg-green-600 text-white rounded-full">
                   Get Started
                 </Button>
-                <Button className="border border-slate-600 text-slate-900 rounded-full">
+                <Button
+                  onClick={handleWatchDemo}
+                  className="border border-slate-600 text-slate-900 rounded-full">
                   Watch Demo
                 </Button>
               </div>
