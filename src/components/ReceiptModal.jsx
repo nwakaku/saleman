@@ -84,7 +84,7 @@ export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
         <ModalHeader className="flex flex-col gap-1">
           <h2 className="text-2xl font-bold text-yellow-900">Order Receipt</h2>
           <p className="text-sm text-yellow-700 italic">
-            Download this for your records{" "}
+            Download/Screenshot this for your records{" "}
           </p>
         </ModalHeader>
         <ModalBody>
