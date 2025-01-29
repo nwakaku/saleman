@@ -486,7 +486,7 @@ export const MenuPage = () => {
                           size="sm"
                           className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 font-semibold">
                           <LuClock size={16} className="mr-1 inline" />
-                          30 mins
+                          30 sec
                         </Chip>
                       </div>
                       <CardBody className="w-1/2 p-3 sm:p-6 flex flex-col justify-between">

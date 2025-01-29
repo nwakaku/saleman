@@ -21,6 +21,7 @@ import UpgradePage from "./Dashboard/UpgradePage";
 import MenuCustomization from "./Dashboard/Customization";
 import MenuRouter from "./components/MenuRouter";
 import { WithdrawalRequest_Xx } from "./components/Xx";
+import Records from "./Dashboard/Records";
 
 const AppRoutes = () => {
 
@@ -53,6 +54,7 @@ const AppRoutes = () => {
             <Route path="" element={<DashboardHome />} />
             <Route path="orders" element={<MyOrders />} />
             <Route path="customization" element={<MenuCustomization />} />
+            <Route path="records" element={<Records />} />
             <Route path="chat" element={<AIChat />} />
             <Route path="customers" element={<ManageCustomers />} />
             <Route path="settings" element={<Settings />} />

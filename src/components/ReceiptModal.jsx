@@ -7,13 +7,66 @@ import {
   ModalFooter,
   Button,
 } from "@nextui-org/react";
+import html2canvas from "html2canvas";
+import { useState } from "react";
 import { LuBox } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
 export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
   const navigate = useNavigate();
+  const [downloading, setDownloading] = useState(false);
 
   if (!orderDetails) return null;
+
+  const handleDownload = async () => {
+    try {
+      setDownloading(true);
+      // Target the content div specifically
+      const element = document.getElementById("receipt-content");
+      if (!element) {
+        throw new Error("Receipt content not found");
+      }
+
+      // Capture with specific configuration to match modal styling
+      const canvas = await html2canvas(element, {
+        backgroundColor: "#fefce8", // yellow-50
+        scale: 2, // Higher quality
+        useCORS: true,
+        logging: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+        onclone: (clonedDoc) => {
+          // Ensure all styles are applied to the cloned element
+          const clonedElement = clonedDoc.getElementById("receipt-content");
+          if (clonedElement) {
+            clonedElement.style.padding = "20px";
+            clonedElement.style.borderRadius = "12px";
+          }
+        },
+      });
+
+      // Create and download the image
+      const image = canvas.toDataURL("image/png", 1.0);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = image;
+      downloadLink.download = `Order_Receipt_${orderDetails.id.substring(
+        0,
+        6
+      )}.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } catch (error) {
+      console.error("Download failed:", error);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const handleDownloadAndClose = async () => {
+    await handleDownload(); // Wait for download to complete
+    onClose(); // Close the modal after download
+  };
 
   return (
     <Modal
@@ -26,11 +79,13 @@ export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
         <ModalHeader className="flex flex-col gap-1">
           <h2 className="text-2xl font-bold text-yellow-900">Order Receipt</h2>
           <p className="text-sm text-yellow-700 italic">
-            ScreenShot this might disappear{" "}
+            Download this for your records{" "}
           </p>
         </ModalHeader>
         <ModalBody>
-          <div className="bg-yellow-50 p-4 rounded-xl border border-yellow-200 shadow-sm">
+          <div
+            id="receipt-content"
+            className="bg-yellow-50 p-4 rounded-xl border border-yellow-200 shadow-sm">
             <div className="flex justify-between mb-2 border-b border-yellow-200 pb-2">
               <span className="text-yellow-700">Order ID:</span>
               <span className="font-semibold text-yellow-900">
@@ -79,9 +134,10 @@ export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
             <Button
               color="warning"
               variant="solid"
-              onClick={onClose}
+              onClick={handleDownloadAndClose}
+              isLoading={downloading}
               className="w-full mb-4">
-              Close Receipt
+              {downloading ? "Downloading..." : "Download Receipt"}
             </Button>
             <div className="flex items-center justify-center space-x-2 text-yellow-700">
               <LuBox className="text-yellow-600" size={24} />

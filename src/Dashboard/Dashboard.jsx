@@ -6,6 +6,7 @@ import {
   LuUser,
   LuTornado,
   LuPalette,
+  LuHistory,
 } from "react-icons/lu";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMyContext } from "../context/MyContext";
@@ -33,12 +34,13 @@ const DashboardSidebar = () => {
 
   const navItems = [
     { icon: LuTornado, label: "Dashboard", path: "/dashboard" },
-    { icon: LuShoppingCart, label: "My Orders", path: "/dashboard/orders" },
+    { icon: LuShoppingCart, label: "Orders", path: "/dashboard/orders" },
     {
       icon: LuPalette,
       label: "Customization",
       path: "/dashboard/customization",
     },
+    { icon: LuHistory, label: "Withdrawals", path: "/dashboard/records" },
     { icon: LuMessagesSquare, label: "AI Chat", path: "/dashboard/chat" },
     {
       icon: LuUser,
