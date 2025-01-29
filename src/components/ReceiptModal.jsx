@@ -21,41 +21,46 @@ export const ReceiptModal = ({ isOpen, onClose, orderDetails }) => {
   const handleDownload = async () => {
     try {
       setDownloading(true);
-      // Target the content div specifically
       const element = document.getElementById("receipt-content");
       if (!element) {
         throw new Error("Receipt content not found");
       }
 
-      // Capture with specific configuration to match modal styling
       const canvas = await html2canvas(element, {
-        backgroundColor: "#fefce8", // yellow-50
-        scale: 2, // Higher quality
+        backgroundColor: "#fefce8",
+        scale: 2,
         useCORS: true,
         logging: false,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-        onclone: (clonedDoc) => {
-          // Ensure all styles are applied to the cloned element
-          const clonedElement = clonedDoc.getElementById("receipt-content");
-          if (clonedElement) {
-            clonedElement.style.padding = "20px";
-            clonedElement.style.borderRadius = "12px";
-          }
-        },
       });
 
-      // Create and download the image
-      const image = canvas.toDataURL("image/png", 1.0);
-      const downloadLink = document.createElement("a");
-      downloadLink.href = image;
-      downloadLink.download = `Order_Receipt_${orderDetails.id.substring(
-        0,
-        6
-      )}.png`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      // Create blob for better cross-browser compatibility
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `Order_Receipt_${orderDetails.id.substring(
+              0,
+              6
+            )}.png`;
+
+            // For iOS Safari and some mobile browsers
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+              window.navigator.msSaveOrOpenBlob(blob, link.download);
+            } else {
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }
+
+            // Clean up
+            setTimeout(() => window.URL.revokeObjectURL(url), 100);
+          }
+        },
+        "image/png",
+        1.0
+      );
     } catch (error) {
       console.error("Download failed:", error);
     } finally {
