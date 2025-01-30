@@ -62,6 +62,7 @@ const Header = () => {
   const [marketplaceId, setMarketplaceId] = useState(null); // State to hold marketplaceId
 
   const [searchParams] = useSearchParams();
+  const [autoWithdrawalInterval, setAutoWithdrawalInterval] = useState();
   const location = useLocation();
 
   useEffect(() => {
@@ -130,7 +131,7 @@ const Header = () => {
       if (session?.user?.id) {
         const { data: marketplaceData, error } = await supabaseUtil
           .from("marketplaces")
-          .select("id")
+          .select("id, auto_withdrawal_interval")
           .eq("user_id", session.user.id)
           .single();
 
@@ -138,6 +139,13 @@ const Header = () => {
           console.error("Error fetching marketplace ID:", error);
         } else {
           setMarketplaceId(marketplaceData.id);
+          console.log(marketplaceData);
+                setAutoWithdrawalInterval(
+                  marketplaceData
+                    ? marketplaceData?.auto_withdrawal_interval
+                    : "off"
+                );
+
         }
       }
     };
@@ -383,6 +391,7 @@ const Header = () => {
                       totalAmount={totalAmount}
                       onWithdraw={handleWithdrawal}
                       buttonColor={buttonColor}
+                      autoWithdrawalInterval={autoWithdrawalInterval}
                     />
                   </NavbarItem>
                 </div>

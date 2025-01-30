@@ -11,11 +11,19 @@ import {
   Input,
 } from "@nextui-org/react";
 import { useState, useEffect, useCallback } from "react";
-import { LuChevronRight, LuFileInput, LuFileText, LuLogOut, LuPlus } from "react-icons/lu";
+import {
+  LuChevronRight,
+  LuFileInput,
+  LuFileText,
+  LuLogOut,
+  LuPlus,
+  LuUpload,
+} from "react-icons/lu";
 import { useMyContext } from "../context/MyContext";
 import supabaseUtil from "../utils/supabase";
 import BottomNav from "../components/BottomNav";
 import { useNavigate } from "react-router-dom";
+import AutoWithdrawalSetting from "./AutoWithdrawal";
 
 const SettingSection = ({ children, title, description }) => (
   <div className="border-b border-gray-200 py-6">
@@ -118,7 +126,6 @@ const WithdrawalAccountCard = ({
   </div>
 );
 
-
 export const Settings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -145,6 +152,9 @@ export const Settings = () => {
   const [fieldValue, setFieldValue] = useState("");
   // Replace existing payment methods state and fetch function
   const [withdrawalAccounts, setWithdrawalAccounts] = useState([]);
+
+  // Add this state near other state declarations
+  const [autoWithdrawalInterval, setAutoWithdrawalInterval] = useState();
 
   const handleEditField = (field, value) => {
     setEditingField(field);
@@ -188,30 +198,34 @@ export const Settings = () => {
     }
   }, [user.id]);
 
+  // Add this to your existing fetchWithdrawalAccounts function
   const fetchWithdrawalAccounts = useCallback(async () => {
     try {
       const { data, error } = await supabaseUtil
         .from("marketplaces")
-        .select("bank_details")
+        .select("bank_details, auto_withdrawal_interval")
         .eq("user_id", user.id)
         .single();
 
       if (error) throw error;
 
-      // Handle the object structure of bank_details
+      // Set the auto withdrawal interval
+
+      console.log(data);
+      setAutoWithdrawalInterval(data ? data?.auto_withdrawal_interval : "off");
+
+      // Handle the existing bank_details logic
       if (data?.bank_details) {
         const bankDetails = data.bank_details;
-        // Convert the single object to an array format expected by the UI
         const formattedAccount = [
           {
-            id: crypto.randomUUID(), // Generate an ID for the existing account
+            id: crypto.randomUUID(),
             bank_name: bankDetails.bankName,
             account_holder_name: bankDetails.accountName,
             account_number: bankDetails.accountNumber,
-            is_default: true, // Since it's the only account
+            is_default: true,
           },
         ];
-
         setWithdrawalAccounts(formattedAccount);
       } else {
         setWithdrawalAccounts([]);
@@ -219,6 +233,7 @@ export const Settings = () => {
     } catch (error) {
       console.error("Error fetching withdrawal accounts:", error);
       setWithdrawalAccounts([]);
+      setAutoWithdrawalInterval("off");
     }
   }, [user.id]);
 
@@ -285,8 +300,43 @@ export const Settings = () => {
   };
 
   // Updated withdrawal account update handler
-  const handleWithdrawalAccountUpdate = async () => {
-    alert("soon");
+  const handleWithdrawalAccountUpdate = async (isNew = false) => {
+    setLoading(true);
+    try {
+      // Format bank details in the structure expected by the database
+      const bankDetails = {
+        bankName: formData.bank_name,
+        accountNumber: formData.account_number,
+        accountName: formData.account_holder_name,
+      };
+
+      // Update the marketplace table with new bank details
+      const { error } = await supabaseUtil
+        .from("marketplaces")
+        .update({
+          bank_details: bankDetails,
+        })
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      // Update local state with formatted account data
+      const formattedAccount = [
+        {
+          id: isNew ? crypto.randomUUID() : editItem.id,
+          bank_name: formData.bank_name,
+          account_holder_name: formData.account_holder_name,
+          account_number: formData.account_number,
+          is_default: true,
+        },
+      ];
+
+      setWithdrawalAccounts(formattedAccount);
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error updating withdrawal account:", error);
+    }
+    setLoading(false);
   };
 
   // Modal handlers
@@ -354,6 +404,21 @@ export const Settings = () => {
     navigate("/dashboard/upgrade");
   };
 
+  // Add this handler function with other handlers
+  const handleAutoWithdrawalChange = async (value) => {
+    try {
+      const { error } = await supabaseUtil
+        .from("marketplaces")
+        .update({ auto_withdrawal_interval: value })
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+      setAutoWithdrawalInterval(value);
+    } catch (error) {
+      console.error("Error updating auto withdrawal interval:", error);
+    }
+  };
+
   return (
     <div className="lg:ml-64 pt-0">
       <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white border-b">
@@ -403,7 +468,6 @@ export const Settings = () => {
             </div>
           </div>
         </SettingSection>
-
         {/* Notification Preferences */}
         <SettingSection
           title="Notification Preferences"
@@ -453,6 +517,37 @@ export const Settings = () => {
             </div>
           </div>
         </SettingSection>
+        {/* // Add this in your JSX where you want the setting to appear (probably
+        in the Notification Preferences section) */}
+        <SettingSection
+          title="Withdrawal Settings"
+          description="Configure your automatic withdrawal preferences">
+          <div className="py-4">
+            <div className="space-y-4">
+              <AutoWithdrawalSetting
+                initialInterval={autoWithdrawalInterval}
+                onIntervalChange={handleAutoWithdrawalChange}
+              />
+              {withdrawalAccounts.map((account) => (
+                <WithdrawalAccountCard
+                  key={account.id}
+                  account={account}
+                  isDefault={account.is_default}
+                  onEdit={() => handleOpenModal("withdrawal", account)}
+                  onSetDefault={async () => {
+                    await handleSetDefaultWithdrawal(account.id);
+                  }}
+                />
+              ))}
+              <button
+                onClick={() => handleOpenModal("withdrawal")}
+                className="w-full py-2 px-4 border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:border-gray-400 hover:text-gray-700 flex items-center justify-center">
+                <LuUpload className="h-5 w-5 mr-2" />
+                Update Withdrawal Account
+              </button>
+            </div>
+          </div>
+        </SettingSection>
 
         {/* Delivery Addresses */}
         <SettingSection
@@ -478,32 +573,6 @@ export const Settings = () => {
             </button>
           </div>
         </SettingSection>
-
-        {/* Payment Methods */}
-        <SettingSection
-          title="Withdrawal Accounts"
-          description="Manage your bank accounts for receiving payments.">
-          <div className="space-y-4">
-            {withdrawalAccounts.map((account) => (
-              <WithdrawalAccountCard
-                key={account.id}
-                account={account}
-                isDefault={account.is_default}
-                onEdit={() => handleOpenModal("withdrawal", account)}
-                onSetDefault={async () => {
-                  await handleSetDefaultWithdrawal(account.id);
-                }}
-              />
-            ))}
-            <button
-              onClick={() => handleOpenModal("withdrawal")}
-              className="w-full py-2 px-4 border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:border-gray-400 hover:text-gray-700 flex items-center justify-center">
-              <LuPlus className="h-5 w-5 mr-2" />
-              Add New Withdrawal Account
-            </button>
-          </div>
-        </SettingSection>
-
         {/* Security Settings */}
         <SettingSection
           title="Security"
@@ -530,9 +599,7 @@ export const Settings = () => {
             </button>
           </div>
         </SettingSection>
-
         {/* Upgrade Setting */}
-        {/* Upgrade Section */}
         <div className="bg-gray-100 mt-8 p-6 rounded-lg shadow-sm flex items-center justify-between">
           <div>
             <h3 className="text-lg font-medium text-gray-900">
@@ -549,7 +616,6 @@ export const Settings = () => {
             Upgrade
           </Button>
         </div>
-
         {/* Logout */}
         <SettingSection title="Logout" description="Logout of your account.">
           <div className="space-y-4">

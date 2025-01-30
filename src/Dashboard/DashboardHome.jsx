@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Button, Input, Card, Avatar, Chip } from "@nextui-org/react";
 import {
   LuTrash,
-  LuImage,
   LuQrCode,
   LuPlus,
   LuMapPin,
@@ -13,7 +12,6 @@ import {
 import BottomNav from "../components/BottomNav";
 import ProfileForm from "./ProfileForm";
 import { useNavigate } from "react-router-dom";
-import { QRCodeSVG } from "qrcode.react";
 import {
   Modal,
   ModalContent,
@@ -34,9 +32,8 @@ export const DashboardHome = () => {
   const [market, setMarket] = useState(null);
   const [menuItems, setMenuItems] = useState([]);
   const [isAddingMarket, setIsAddingMarket] = useState(true);
-  const [isGridView, setIsGridView] = useState(false);
 
-  const { user, session } = useMyContext();
+  const { session } = useMyContext();
 
   const [newItem, setNewItem] = useState({
     name: "",

@@ -14,7 +14,12 @@ import {
 import { LuWallet, LuEye, LuEyeOff, LuArrowDownToLine } from "react-icons/lu";
 import { useMyContext } from "../context/MyContext";
 
-const BalancePopover = ({ totalAmount, onWithdraw, buttonColor }) => {
+const BalancePopover = ({
+  totalAmount,
+  onWithdraw,
+  buttonColor,
+  autoWithdrawalInterval,
+}) => {
   const { isBalanceVisible, toggleBalanceVisibility } = useMyContext();
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -32,6 +37,8 @@ const BalancePopover = ({ totalAmount, onWithdraw, buttonColor }) => {
       setPassword("");
     }
   };
+
+  console.log(autoWithdrawalInterval);
 
   return (
     <Popover placement="bottom-end">
@@ -71,16 +78,17 @@ const BalancePopover = ({ totalAmount, onWithdraw, buttonColor }) => {
                   : "******"}
               </h2>
             </div>
-
-            <Button
-              fullWidth
-              color="primary"
-              variant="flat"
-              className="bg-green-100 text-green-700"
-              onClick={() => setIsWithdrawModalOpen(true)}
-              startContent={<LuArrowDownToLine />}>
-              Withdraw Funds
-            </Button>
+            {autoWithdrawalInterval === "off" ?  (
+              <Button
+                fullWidth
+                color="primary"
+                variant="flat"
+                className="bg-green-100 text-green-700"
+                onClick={() => setIsWithdrawModalOpen(true)}
+                startContent={<LuArrowDownToLine />}>
+                Withdraw Funds
+              </Button>) : null
+            }
 
             {isWithdrawModalOpen && (
               <div className="mt-4 space-y-4">
